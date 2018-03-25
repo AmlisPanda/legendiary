@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
-import { NavItem } from './NavItem.js'
+import * as React from 'react';
+import { NavItem } from './NavItem'
 
-export class Nav extends Component {
+export interface NavProps {
+    handlerTogglePopup: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+    handlerLogout: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+}
+export class Nav extends React.Component<NavProps> {
 
     constructor(props) {
         super(props);

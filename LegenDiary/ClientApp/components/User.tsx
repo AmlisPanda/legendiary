@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-export class User extends Component {
+
+export interface UserState {
+    login: string;
+}
+export class User extends React.Component<{}, UserState> {
 
   constructor(props) {
   	super(props);

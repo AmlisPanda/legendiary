@@ -56,8 +56,9 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
                 <div id="container">
                     <MainContent isLoggedIn={isLoggedIn} handlerLogin={this.handlerLogin} />
 
-                    <Popup active={this.state.popupActive} handlerTogglePopup={this.handlerTogglePopup} />
-
+                    {isLoggedIn &&
+                        <Popup active={this.state.popupActive} handlerTogglePopup={this.handlerTogglePopup} />
+                    }
                     {isLoggedIn &&
                         <Nav handlerLogout={this.handlerLogout} handlerTogglePopup={this.handlerTogglePopup} />
                     }

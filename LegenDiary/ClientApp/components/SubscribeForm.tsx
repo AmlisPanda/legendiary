@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { FormField } from './FormField.js'
+import * as React from 'react';
+import { FormField } from './FormField'
 
-export class SubscribeForm extends Component {
+export class SubscribeForm extends React.Component {
     render() {
         return (
             <form id="subscribeForm">

@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Widget } from './Widget.js'
 import { ListWidgetListItem } from './ListWidgetListItem.js'
 
-export class ListWidget extends Component {
+type ListItem = {
+    order: number;
+    label: string;
+}
+export interface ListWidgetProps {
+    listType: number;
+}
+export interface ListWidgetState {
+    items: Array<ListItem>;
+    text: string;
+}
+
+export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState> {
     constructor(props) {
        super(props);
 
@@ -43,16 +55,16 @@ export class ListWidget extends Component {
     static cn = "listWidget";
     render() {
 
-        let listItems = [];
+        let listItems:Array<ListItem> =[];
 
-        if (this.props.listType == "1") {
+        if (this.props.listType === 1) {
             listItems = [
                 { order: 0, label: "Pain" },
                 { order: 1, label: "Jambon" },
                 { order: 2, label: "Tomates" }
             ]
         }
-        else if (this.props.listType == "2") {
+        else if (this.props.listType === 2) {
             listItems = [
                 { order: 0, label: "Minisizer" },
                 { order: 1, label: "Black Panther" },
@@ -60,9 +72,10 @@ export class ListWidget extends Component {
             ]
         }
 
-        this.state.items = listItems;
+        this.setState({
+            items: listItems
+        });
         return (
-            <Widget title={this.props.title} description={this.props.description} cn={ListWidget.cn} isLoggedIn={this.props.isLoggedIn} w="600" h="900" >
                 <form onSubmit={this.handleSubmit}>
                     <div className="listTyping">
                         <input type="text" className="inputAddListValue" value={this.state.text} placeholder="Ajoute un item" onChange={this.handleChange} />
@@ -77,7 +90,6 @@ export class ListWidget extends Component {
                     </ul>
                 </form>
 
-            </Widget>
 
         );
     }

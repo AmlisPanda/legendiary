@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import { FormField } from './FormField.js'
+import * as React from 'react';
+import { FormField } from './FormField'
 
-export class LoginForm extends Component {
+export interface LoginFormProps {
+    handlerLogin: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+}
+export class LoginForm extends React.Component<LoginFormProps> {
     render() {
         return (
             <form id="loginForm">

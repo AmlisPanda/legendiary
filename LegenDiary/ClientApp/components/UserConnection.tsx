@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-export class UserConnection extends Component {
+ export interface UserConnectionProps {
+     handlerLogin: (ev: React.MouseEvent<HTMLElement>) => void;
+}
+export class UserConnection extends React.Component<UserConnectionProps> {
     render() {
 
         return (

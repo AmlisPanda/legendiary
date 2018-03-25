@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
-import { FormField } from './FormField.js'
-import { WidgetContentForm } from './WidgetContentForm.js'
+import * as React from 'react';
+import { FormField } from './FormField'
+import { WidgetContentForm } from './WidgetContentForm'
 
-export class CreateWidgetForm extends Component {
+export interface CreateWidgetFormState {
+    widgetType: number;
+}
+
+export class CreateWidgetForm extends React.Component<{}, CreateWidgetFormState> {
 
     constructor(props) {
         super(props);
@@ -18,13 +22,13 @@ export class CreateWidgetForm extends Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <h2>Crée ton widget</h2>
                 <FormField label="Titre" type="text" />
                 <FormField label="Description" type="text" />
                 <section>
-                    <FormField label="Type de widget" type="select" value={this.state.widgetType} changeHandler={this.typeChange}>
+                    <FormField label="Type de widget" type="select" value={this.state.widgetType.toString()} changeHandler={this.typeChange}>
                         <option value="0">Texte</option>
                         <option value="1">Image</option>
                         <option value="2">Liste</option>
@@ -37,10 +41,10 @@ export class CreateWidgetForm extends Component {
                     </FormField>
                 </section>
 
-                <WidgetContentForm contentType={this.state.widgetType}/>
+                <WidgetContentForm contentType={this.state.widgetType} />
 
                 <button className="buttonForm">Créer</button>
             </div>
-        )
+        );
     }
 }

@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import { WidgetsList } from './WidgetsList.js';
-import { SubscribeForm } from './SubscribeForm.js';
-import { LoginForm } from './LoginForm.js';
+import * as React from 'react';
+import { WidgetsList } from './WidgetsList';
+import { SubscribeForm } from './SubscribeForm';
+import { LoginForm } from './LoginForm';
 
-export class MainContent extends Component {
+export interface MainContentProps {
+    isLoggedIn: boolean;
+    handlerLogin: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-    render() {
+export class MainContent extends React.Component<MainContentProps, {}> {
+
+    public render() {
 
         const isLoggedIn = this.props.isLoggedIn;
 

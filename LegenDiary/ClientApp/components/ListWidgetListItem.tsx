@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-export class ListWidgetListItem extends Component {
+export interface ListWidgetListItemProps {
+    listType: number;
+    label: string;
+}
+
+export class ListWidgetListItem extends React.Component<ListWidgetListItemProps> {
 
     render() {
 
         let notation = [];
-        if (this.props.listType == "2") {
+        if (this.props.listType === 2) {
             for (var i = 0; i < 5; i++) {
                 notation.push(
                     (<i className="far fa-star fa-s"></i>)
@@ -14,7 +19,7 @@ export class ListWidgetListItem extends Component {
         }
 
         return (
-            <li className={this.props.listType == "1" ? "strikethroughItem" : ""}>
+            <li className={this.props.listType === 1 ? "strikethroughItem" : ""}>
                 <div >
                     {this.props.label}
                     <i className="iconDelete fas fa-trash fa-xs"></i>

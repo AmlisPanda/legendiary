@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-export class Widget extends Component {
+
+export interface WidgetProps {
+    title: string;
+    description: string;
+    cn?: string;
+    w?: number;
+    h?: number;
+    isLoggedIn: boolean;
+}
+export interface WidgetState {
+    isFavourite: boolean;
+    cn: string;
+}
+export class Widget extends React.Component<WidgetProps, WidgetState> {
 	constructor(props) {
 		super(props);
 		this.state = {
 			cn: "widget " + this.props.cn,
-			title: this.props.title,
-			description: this.props.description,
-			width: this.props.w || 400,
-			height: this.props.h || 400,
 			isFavourite: false
 		}
 		this.handleFavClick = this.handleFavClick.bind(this);
@@ -41,8 +50,8 @@ export class Widget extends Component {
 
 				</div>
 				<header>
-					<h2 onClick={this.handleFavClick}>{this.state.title}</h2>
-					<p className="description">{this.state.description}</p>
+					<h2 onClick={this.handleFavClick}>{this.props.title}</h2>
+					<p className="description">{this.props.description}</p>
 
 					<div className="widgetFav" onClick={this.handleFavClick} onMouseOver={this.handleFavMouseOver}>
 						{isFav ?

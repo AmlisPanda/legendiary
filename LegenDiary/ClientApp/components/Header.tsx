@@ -1,9 +1,10 @@
 import * as React from 'react';
-//import logo from './images/logo.jpg'; // relative path to image
-import { Menu } from './Menu.js'
-import { UserConnection } from './UserConnection.js'
-import { User } from './User.js'
+import { Menu } from './Menu'
+import { UserConnection } from './UserConnection'
+import { User } from './User'
 import { MouseEventHandler, EventHandler, MouseEvent } from 'react';
+
+const logo = require('../images/logo.jpg');
 
 export interface HeaderProps {
     isLoggedIn: boolean;
@@ -20,16 +21,16 @@ export class Header extends React.Component<HeaderProps, {}> {
         return (
             <header className="App-header">
                 <div id="logoTitle">
-                    <img className="App-logo" src={logo} />
+                    <img className="App-logo" src={String(logo)} />
                     <h1 className="App-title">LegenDiary</h1>
                 </div>
 
               {this.props.isLoggedIn &&
-                  (<User handlerLogout={this.props.handlerLogout} />)
+                  (<User />)
               }
 
-              {this.props.isLoggedIn &&
-                  <Menu selectedItem="0" isLoggedIn={this.props.isLoggedIn} />
+                {this.props.isLoggedIn &&
+                    <Menu selectedItem={0} isLoggedIn={this.props.isLoggedIn} />
               }
 
             </header>
