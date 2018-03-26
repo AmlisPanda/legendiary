@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DatePickerField } from './DatePickerField'
 
 export interface FormFieldProps {
+    id?: string;
     label: string;
     type: string;
     value?: string;
@@ -14,12 +15,12 @@ export class FormField extends React.Component<FormFieldProps, {}> {
         let input = null;
 
         if (this.props.type === "text")
-            input = (<input type="text" onChange={this.props.changeHandler} />);
+            input = (<input type="text" onChange={this.props.changeHandler} id={this.props.id} />);
         else if (this.props.type === "password")
-            input = (<input type="password" onChange={this.props.changeHandler} />);
+            input = (<input type="password" onChange={this.props.changeHandler} id={this.props.id} />);
         else if (this.props.type === "select") {
             input = (
-                <select value={this.props.value} onChange={this.props.changeHandler}>
+                <select value={this.props.value} onChange={this.props.changeHandler} id={this.props.id} >
                     {this.props.children}
                 </select>
 

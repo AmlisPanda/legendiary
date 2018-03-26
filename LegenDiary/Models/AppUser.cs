@@ -1,43 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LegenDiary.Models
 {
-    [Table("APPUSER")]
-    public class AppUser
+    public partial class Appuser
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key, Column(Order = 0)]
-        [Required]
-        [DisplayName("AppUserId")]
-        public int AppUserId { get; set; }
+        public Appuser()
+        {
+            Widget = new HashSet<Widget>();
+        }
 
-        [MaxLength(200)]
-        [Required]
-        [DisplayName("AppUserLogin")]
-        public string AppUserLogin { get; set; }
-
-        [MaxLength(200)]
-        [Required]
-        [DisplayName("Email")]
+        public int AppuserId { get; set; }
+        public string AppuserLogin { get; set; }
         public string Email { get; set; }
+        public DateTimeOffset? SubscriptionDate { get; set; }
+        public DateTimeOffset? LastConnection { get; set; }
 
-        [MaxLength(500)]
-        [Required]
-        [DisplayName("EncryptedPassword")]
-        public string EncryptedPassword { get; set; }
+        private string _encryptedPassword;
+        public string EncryptedPassword {
+            get => _encryptedPassword;
+            set => _encryptedPassword = value; }
 
-        [DisplayName("SubscriptionDate")]
-        public DateTimeOffset SubscriptionDate { get; set; }
-
-        [DisplayName("LastConnection")]
-        public DateTimeOffset LastConnection { get; set; }
-
-
+        public ICollection<Widget> Widget { get; set; }
+        
     }
 }

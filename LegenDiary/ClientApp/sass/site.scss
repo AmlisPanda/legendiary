@@ -1,0 +1,459 @@
+@import './variables';
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #F4F7F6;
+	font-family: $font-stack;
+	margin: 0;
+	background: url('../images/bg.jpg') no-repeat top left;
+	background-size: cover;
+	padding-bottom: 40px;
+}
+
+.red {
+	color: $red;
+}
+
+button {
+	cursor: pointer;
+	border: none;
+	background-color: white;
+}
+
+.App-logo {
+	float: left;
+  	margin-right: 10px;
+}
+
+#logoTitle {
+	float: left;
+}
+
+.App-header {
+	background-color: #fff;
+    height: 85px;
+    padding: 10px;
+    color: black;
+    /* position: absolute; */
+    width: 100%;
+    /* top: 0; */
+    -webkit-box-sizing: border-box;
+    /* box-sizing: border-box; */
+    overflow: hidden;
+	i {
+		color: $main-color;
+	}
+}
+
+.App-title {
+  font-size: 1.5em;
+  float: left;
+}
+
+
+
+#nav {
+	position: relative;
+	width: 40%;
+	height: 30px;
+	font-size: 1.2em;
+	line-height: 40px;
+	padding: 10px;
+	margin: auto;
+	color: black;
+	display: flex;
+	text-transform: uppercase;
+
+	a {
+		flex: 1;
+		text-decoration: none;
+		color: #000;
+		cursor: pointer;
+	}
+
+	a.active {
+		color: $main-color;
+	}
+
+	a:hover {
+		color: $main-color;
+	}
+}
+
+
+#userBlock {
+	float: right;
+	font-size: 1.2em;
+	line-height: 65px;
+
+	button {
+		color: $main-color;
+		border: none;
+		background-color: #fff;
+		cursor: pointer;
+	}
+	button:hover {
+		text-decoration: underline;
+	}
+
+	span {
+		color: $main-color;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+}
+
+#logoutBtn {
+	text-decoration: none;
+	color: red;
+	display: block;
+	:hover {
+		text-decoration: underline;
+	}
+}
+
+
+#container {
+		width: 100%;
+		height: 100%;
+		position: relative;
+}
+
+#main {
+	width: 80%;
+    margin: auto;
+	padding-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+form {
+	background-color: white;
+	padding: 25px 0 40px;
+	text-align: center;
+	opacity: 0.8;
+	font-size: 1.2em;
+
+
+	h2 {
+		margin: 0;
+		margin-bottom: 20px;
+	}
+
+
+	label {
+		display: block;
+		width: 80%;
+		text-align: left;
+		margin: auto;
+		margin-bottom: 30px;
+		color: $dark-color;
+	}
+
+	input[type='text'], input[type='password'] {
+		width: 100%;
+		border: 0;
+		border-bottom: 1px solid black;
+		font-size: 1.3em;
+	}
+	input:focus, input:active {
+		outline: none;
+		border: none;
+		border-bottom: 1px solid $main-color;
+	}
+
+	select, .react-date-picker {
+		font-size: 1em;
+        display: block;
+	}
+
+    select {
+        font-size: 1.3em;
+    }
+
+	.react-calendar {
+		font-size: 0.7em;
+	}
+	.buttonForm {
+		background-color: $dark-color;
+		color: #fff;
+		padding: 10px 40px;
+		font-size: 1.2em;
+		border-radius: 10px;
+		margin-top: 20px;
+	}
+	.buttonForm:hover {
+		background-color: $main-color;
+	}
+}
+
+#homepageContent {
+	display: flex;
+	width: 65%;
+	margin: auto;
+	margin-top: 50px;
+
+	form {
+		border-top: 5px solid $main-color;
+	}
+
+	#subscribeForm {
+		flex-grow: 2;
+		margin-right: 3px;
+	}
+
+
+	#lnkForgotPassword {
+		color: $main-color;
+		font-size: 1em;
+		display: block;
+		margin-bottom: 15px;
+		cursor: pointer;
+	}
+	#lnkForgotPassword:hover {
+		text-decoration: underline;
+	}
+}
+
+#widgetsList {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
+}
+.widget {
+	background-color: #fff;
+	padding: 7px 15px 7px 30px;
+	margin: 0 15px 15px 0;
+	float: left;
+	position: relative;
+	border-radius: 10px;
+
+	.grip {
+		width: 22px;
+		padding: 10px 0px;
+		height: 100%;
+		background-color: $dark-color;
+		position: absolute;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		text-align: center;
+		cursor: move;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+
+		i {
+			color: white;
+			cursor: pointer;
+			margin-bottom: 8px;
+		}
+		i:hover {
+			color: $dark-color;
+		}
+
+	}
+	header {
+		margin-bottom: 10px;
+		position: relative;
+	}
+
+	h2 {
+		font-size: 1.5em;
+		margin: 0;
+		width: 90%;
+		text-align: left;
+		color: $main-color;
+		font-weight: normal;
+	}
+
+	.widgetFav {
+		cursor: pointer;
+		i {
+			position: absolute;
+			top: 3px;
+			right: 0;
+			color: red;
+		}
+	}
+
+	p.description {
+		margin: 0;
+		font-size: 1em;
+		font-style: italic;
+	}
+	.widgetContent {
+		font-size: 1em;
+	}
+}
+
+.imageWidget img {
+	max-width: 400px;
+}
+
+.listWidget {
+
+	form {
+		text-align: left;
+
+		.listTyping {
+			display: flex;
+
+			input {
+				flex-grow: 4;
+				width: auto;
+			}
+
+			button:hover {
+				color: $main-color;
+			}
+		}
+	}
+
+	ul {
+		margin-left: 5px;
+		padding-left: 20px;
+		font-size: 1.2em;
+		li {
+			line-height: 30px;
+			cursor: pointer;
+
+			i.bullet {
+				float: left;
+			}
+
+			i.iconDelete {
+				display: none;
+				line-height: 25px;
+				float: right;
+			}
+
+			i:hover {
+				color: $main-color;
+
+			}
+		}
+		li:hover {
+			i {
+				display: inline-block;
+			}
+
+
+		}
+
+		li.strikethroughItem:hover {
+			color: $main-color;
+		}
+
+		li {
+			div.strikethrough {
+				text-decoration: line-through;
+			}
+		}
+
+	}
+
+
+}
+
+.timerWidget {
+	.timerText {
+		text-align: center;
+		font-size: 3em;
+		font-weight: bold;
+	}
+}
+
+#popupContainer {
+	visibility: hidden;
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;z-index: 0;
+}
+
+#popupContainer.active {
+	visibility: visible;
+	z-index: 5;
+	background-color: $dark-color;
+	overflow: hidden;
+	background: rgba(0,0,0,0.3);
+
+	form {
+		background-color: #fff;
+		width: 60%;
+		height: 80%;
+		margin: 40px auto;
+		opacity: 1;
+		position: relative;
+		padding: 20px 40px;
+
+		label {
+			width: 100%;
+            display: block;
+		}
+		section {
+			text-align: left;
+			display: flex;
+			.field {
+				flex-grow: 1;
+			}
+		}
+
+		.closeButton {
+			float: right;
+			cursor: pointer;
+		}
+		.closeButton:hover {
+			color: $main-color;
+		}
+	}
+}
+
+#toolsNav {
+	width: 200px;
+	margin-top: 25px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-align: center;
+	font-size: 1.2em;
+	padding-right: 20px;
+	display: flex;
+	flex-direction: column;
+
+	a {
+		flex-grow: 1;
+		color: white;
+		text-decoration: none;
+		margin-bottom: 30px;
+		cursor: pointer;
+
+		span {
+			display: block;
+		}
+	}
+	a:hover {
+		color: $main-color;
+	}
+}
+
+footer {
+	background-color: $dark-color;
+	color: white;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 25px;
+	text-align: center;
+	font-size: 0.8em;
+	line-height: 25px;
+	a {
+		color: white;
+		text-decoration: none;
+	}
+}
