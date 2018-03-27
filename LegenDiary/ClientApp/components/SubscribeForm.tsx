@@ -3,7 +3,9 @@ import { FormField } from './FormField';
 import { RouteComponentProps } from 'react-router';
 import { Subscriber } from './Models';
 import * as models from './Models';
-
+/** Material UI */
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export interface SubscribeFormState {
     subscriber: Subscriber;
@@ -38,14 +40,15 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
     }
 
     render() {
+
         return (
             <form id="subscribeForm">
                 <h2>Inscris-toi pour commencer ton Bujo !</h2>
-                <FormField id="AppUserLogin" label="Login" type="text"  />
-                <FormField id="Email" label="Adresse mail" type="text"  />
-                <FormField id="EncryptedPassword" label="Mot de passe" type="password"  />
-                <FormField label="Confirme ton mot de passe"  type="password" />
-                <button className="buttonForm" onClick={this.handleCreate}>S'inscrire</button>
+                <TextField id="AppUserLogin" fullWidth={true}  floatingLabelText="Login" />
+                <TextField id="Email" fullWidth={true}  floatingLabelText="Adresse mail" />
+                <TextField id="EncryptedPassword" fullWidth={true}  floatingLabelText="Mot de passe" />
+                <TextField id="PasswordConfirm" fullWidth={true}  floatingLabelText="Confirme ton mot de passe" />
+                <RaisedButton type="submit" primary={true}  fullWidth={true}  label="S'inscrire" onClick={this.handleCreate} />
             </form>
         );
     }
