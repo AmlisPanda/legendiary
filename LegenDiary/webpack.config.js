@@ -10,7 +10,12 @@ module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
     return [{
         stats: { modules: false },
-        entry: { 'main': './ClientApp/boot.tsx' },
+        entry: {
+            'main': './ClientApp/boot.tsx',
+            'app': [
+                'react-hot-loader/patch',
+            ]
+        },
         resolve: { extensions: ['.js', '.jsx', '.ts', '.tsx', ".css", ".scss"] },
         output: {
             path: path.join(__dirname, bundleOutputDir),
@@ -19,7 +24,21 @@ module.exports = (env) => {
         },
         module: {
             rules: [
-                { test: /\.tsx?$/, include: /ClientApp/, use: 'awesome-typescript-loader?silent=true' },
+                {
+                    test: /\.tsx?$/,
+                    include: /ClientApp/,
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                babelrc: true,
+                                plugins: ['react-hot-loader/babel'],
+                            },
+                        },
+                        'awesome-typescript-loader?silent=true'
+                    ]
+                        
+                },
                 { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader?minimize' }) },
                 {
                     test: /\.scss$/,
