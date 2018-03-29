@@ -132,63 +132,63 @@ button {
 
 
 form {
-	background-color: white;
-	padding: 25px 20px 40px;
-	text-align: center;
-	opacity: 0.8;
-	font-size: 1.2em;
+    background-color: white;
+    padding: 25px 20px 40px;
+    opacity: 0.8;
+    font-size: 1.2em;
 
 
-	h2 {
-		margin: 0;
-		margin-bottom: 20px;
-	}
+    h2 {
+        margin: 0;
+        margin-bottom: 20px;
+    }
 
 
-	label {
-		display: block;
-		width: 80%;
-		text-align: left;
-		margin: auto;
-		margin-bottom: 30px;
-		color: $dark-color;
-	}
-
-	input[type='text'], input[type='password'] {
-		width: 100%;
-		border: 0;
-		border-bottom: 1px solid black;
-		font-size: 1.3em;
-	}
-	input:focus, input:active {
-		outline: none;
-		border: none;
-		border-bottom: 1px solid $main-color;
-	}
-
-	select, .react-date-picker {
-		font-size: 1em;
+    label {
         display: block;
-	}
+        width: 80%;
+        text-align: left;
+        margin: auto;
+        margin-bottom: 30px;
+        color: $dark-color;
+    }
+
+    input[type='text'], input[type='password'] {
+        width: 100%;
+        border: 0;
+        font-size: 1.3em;
+    }
+
+    input:focus, input:active {
+        outline: none;
+        border: none;
+    }
+
+    select, .react-date-picker {
+        font-size: 1em;
+        display: block;
+    }
 
     select {
         font-size: 1.3em;
     }
 
-	.react-calendar {
-		font-size: 0.7em;
-	}
-	.buttonForm {
-		background-color: $dark-color;
-		color: #fff;
-		padding: 10px 40px;
-		font-size: 1.2em;
-		border-radius: 10px;
-		margin-top: 20px;
-	}
-	.buttonForm:hover {
-		background-color: $main-color;
-	}
+    .react-calendar {
+        font-size: 0.7em;
+    }
+
+    .buttonForm {
+        background-color: $dark-color;
+        color: #fff;
+        padding: 10px 40px;
+        font-size: 1.2em;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .buttonForm:hover {
+        background-color: $main-color;
+    }
 }
 
 #homepageContent {

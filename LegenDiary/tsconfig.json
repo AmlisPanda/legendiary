@@ -8,7 +8,9 @@
     "sourceMap": true,
     "skipDefaultLibCheck": true,
     "strict": false,
-    "types": ["webpack-env"]
+    "types": [ "webpack-env" ],
+    "emitBOM": false,
+    "charset": "utf8"
   },
   "exclude": [
       "bin",

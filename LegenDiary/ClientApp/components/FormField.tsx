@@ -7,6 +7,7 @@ export interface FormFieldProps {
     type: string;
     value?: string;
     changeHandler?: (ev: React.ChangeEvent<HTMLElement>) => void;
+    required?: boolean;
 }
 
 export class FormField extends React.Component<FormFieldProps, {}> {
@@ -28,6 +29,9 @@ export class FormField extends React.Component<FormFieldProps, {}> {
         }
         else if (this.props.type === "datepicker") {
             input = (<DatePickerField onChange={this.props.changeHandler}></DatePickerField>);
+        }
+        else if (this.props.type === "email") {
+            input = <input type="email" onChange={this.props.changeHandler} id={this.props.id}  />;
         }
 
         return (
