@@ -83,7 +83,7 @@ namespace LegenDiary.Controllers
 
         // POST: api/Appusers
         [HttpPost]
-        public async Task<IActionResult> PostAppuser([FromBody] Appuser appuser)
+        public async Task<IActionResult> PostAppuser([FromBody] [ModelBinder(BinderType = typeof(AppUserModelBinder))]Appuser appuser)
         {
             if (!ModelState.IsValid)
             {

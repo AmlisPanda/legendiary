@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace LegenDiary.Models
 {
+
+    [ModelBinder(BinderType = typeof(AppUserModelBinder))]
     public partial class Appuser
     {
         public Appuser()
