@@ -21,11 +21,10 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
         super(props);
         this.state = {
             subscriber: {
-                AppUserLogin: "",
+                Login: "",
                 Email: "",
                 Password: "",
-                PasswordConfirm: "",
-                SubscriptionDate: new Date()
+                PasswordConfirm: ""
             },
             openDialog: false,
             dialogMsg: ""
@@ -51,18 +50,18 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
         e.preventDefault();
 
         const user = this.state.subscriber;
-        user.SubscriptionDate = new Date();
         this.setState({ subscriber: user });
 
 
         let thisForm = this;
 
-        fetch('api/AppUsers/',
+        fetch('api/User/',
             {
                 method: "post",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.state.subscriber)
             }).then(function (response) {
+                console.log(response);
                 let dialogMsg = "";
                 if (response.ok)
                     dialogMsg = "Inscription réussie, tu peux maintenant te connecter !";
@@ -107,10 +106,10 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
             >
                 <h2>Inscris-toi pour commencer ton Bujo !</h2>
                 <TextValidator
-                    name="AppUserLogin"
+                    name="Login"
                     fullWidth={true}
                     floatingLabelText="Login"
-                    value={this.state.subscriber.AppUserLogin}
+                    value={this.state.subscriber.Login}
                     onChange={this.handleChange}
                     validators={['required']}
                     errorMessages={[requiredText]}

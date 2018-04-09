@@ -1,9 +1,8 @@
 ﻿export class Subscriber {
-    AppUserLogin: string;
+    Login: string;
     Email: string;
     Password: string;
     PasswordConfirm: string;
-    SubscriptionDate: Date;
 }
 
 export class User {
