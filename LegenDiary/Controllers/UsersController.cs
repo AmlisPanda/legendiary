@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,25 @@ namespace LegenDiary.Controllers
 
             return user.Save(_configuration);
         }
-        
+
+        // POST: api/Users
+        [HttpPost]
+        [Route("Login")]
+        public Response Login([FromBody]User user)
+        {
+            user.EncryptedPassword = EncryptPassword(user.Password);
+
+            Response resp = user.Authenticate(_configuration);
+
+            if (resp.Success)
+            {
+                //System.Web.HttpContext.Current.Session["User"] = user;
+                HttpContext.Session.SetString("UserLogin", user.Email);
+            }
+
+            return resp;
+        }
+
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

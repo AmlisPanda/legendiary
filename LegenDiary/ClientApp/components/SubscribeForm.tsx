@@ -55,18 +55,16 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
 
         let thisForm = this;
 
-        fetch('api/User/',
+        fetch('api/Users/',
             {
                 method: "post",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.state.subscriber)
-            }).then(function (response) {
-                console.log(response);
-                let dialogMsg = "";
-                if (response.ok)
-                    dialogMsg = "Inscription réussie, tu peux maintenant te connecter !";
-                else
-                    dialogMsg = "L'inscription a échoué, ré-essaie plus tard.";
+            })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                console.log(data);
+                let dialogMsg = data.Message;
                 return dialogMsg;
             }).then(function (dialogMsg) {
                 thisForm.setState({ openDialog: true, dialogMsg: dialogMsg });

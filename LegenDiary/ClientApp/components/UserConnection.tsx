@@ -1,9 +1,30 @@
 import * as React from 'react';
+import { User } from './Models';
 
  export interface UserConnectionProps {
      handlerLogin: (ev: React.MouseEvent<HTMLElement>) => void;
 }
-export class UserConnection extends React.Component<UserConnectionProps> {
+export interface UserConnectionState {
+    user: User;
+    openDialog: boolean;
+    dialogMsg: string;
+}
+
+export class UserConnection extends React.Component<UserConnectionProps, UserConnectionState> {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                Email: "",
+                Password: "",
+            },
+            openDialog: false,
+            dialogMsg: ""
+        };
+    }
+
     render() {
 
         return (

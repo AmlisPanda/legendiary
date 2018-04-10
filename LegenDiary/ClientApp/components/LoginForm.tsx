@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Redirect, withRouter, RouteComponentProps } from 'react-router-dom'
 import { User } from './Models';
 /** Material UI */
 import TextField from 'material-ui/TextField';
@@ -9,10 +10,13 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 
 export interface LoginFormProps {
     handlerLogin: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+    router?: History;
 }
 export interface LoginFormState {
     user: User;
     openDialog: boolean;
+    dialogMsg: string;
+    
 }
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
@@ -24,15 +28,41 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                 Email: "",
                 Password: ""
             },
-            openDialog: false
+            openDialog: false,
+            dialogMsg: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit() {
-        this.setState({ openDialog: true });
+    handleSubmit(e) {
+        e.preventDefault();
+
+        const user = this.state.user;
+        this.setState({ user: user });
+
+        let thisForm = this;
+
+        const { router } = this.props;
+
+        fetch('api/Users/Login',
+            {
+                method: "post",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(this.state.user)
+            })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                console.log(data);
+                let dialogMsg = data.Message;
+                if (!data.Success) {
+                    thisForm.setState({ openDialog: true, dialogMsg: dialogMsg });
+                }
+                else {
+                    //router.push("/user");
+                }
+            });
     }
 
     handleClose() {
@@ -54,7 +84,16 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                 onClick={this.handleClose}
             />,];
 
+        //const { redirectToUserHome } = this.state
+
+        //if (redirectToUserHome === true)
+        //{
+        //    <Redirect to='/user' />
+        //}
+
+
         return (
+          
             <ValidatorForm id="loginForm"
                 onSubmit={this.handleSubmit}>
                 <h2>Déjà inscrit ? Connecte-toi !</h2>
@@ -80,10 +119,12 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     open={this.state.openDialog}
                     onRequestClose={this.handleClose}
                 >
-                    E-mail et/ou mot de passe incorrect :(
+                    {this.state.dialogMsg}
                 </Dialog>
             </ValidatorForm>
 
         );
     }
 }
+
+export default withRouter(LoginForm);

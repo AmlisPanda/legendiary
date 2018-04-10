@@ -34,25 +34,31 @@ namespace LegenDiary.Models
                 {
                     cn.Open();
 
+                    if (UserExists(cn))
+                        return new Response(false, "Un utilisateur avec cette adresse mail existe déjà.");
+
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText = @"INSERT INTO [APPUSER] (AppUserLogin, Email, EncryptedPassword, SubscriptionDate) 
-                                        VALUES (@login, @email, @pw, @date)
-                                        ";
+                    cmd.CommandText = @"INSERT INTO [APPUSER] (AppUser_Login, Email, Encrypted_Password, Subscription_Date) 
+                                        VALUES (@login, @email, @pw, @date)";
                     cmd.Parameters.Add("@login", System.Data.SqlDbType.NVarChar).Value = this.Login;
                     cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar).Value = this.Email;
                     cmd.Parameters.Add("@pw", System.Data.SqlDbType.NVarChar).Value = this.EncryptedPassword;
 
-                    this.SubscriptionDate = new DateTime();
+                    this.SubscriptionDate = DateTime.Now;
                     cmd.Parameters.Add("@date", System.Data.SqlDbType.NVarChar).Value = this.SubscriptionDate;
 
                     if (cmd.ExecuteNonQuery() > 0)
+                    {
                         success = true;
+                        message = "Ton compte a bien été créé, tu peux maintenant te connecter !";
+                    }
+                       
                     else
                         message = "Le compte n'a pas été créé, ré-essaie plus tard.";
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     // TODO : écrire des logs
                     message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
@@ -65,6 +71,71 @@ namespace LegenDiary.Models
 
 
             return new Response(success, message);
+        }
+
+        private bool UserExists(SqlConnection cn)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cn;
+            cmd.CommandText = @"SELECT COUNT(AppUser_ID) FROM APPUSER WHERE EMAIL LIKE @email";
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar).Value = this.Email;
+
+            if ((int)cmd.ExecuteScalar() > 0)
+            {
+                return true;
+            }
+            else
+                return false;
+
+        }
+
+        public Response Authenticate(IConfiguration config)
+        {
+            bool success = false;
+            string message = string.Empty;
+
+            using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
+            {
+                try
+                {
+                    cn.Open();
+
+                    if (!CheckUser(cn))
+                        return new Response(false, "L'adresse mail ou le mot de passe est incorrect.");
+
+                    success = true;
+
+                }
+
+                catch (Exception e)
+                {
+                    // TODO : écrire des logs
+                    message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+
+
+            return new Response(success, message);
+        }
+
+        private bool CheckUser(SqlConnection cn)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cn;
+            cmd.CommandText = @"SELECT COUNT(AppUser_ID) FROM APPUSER WHERE EMAIL LIKE @email AND ENCRYPTED_PASSWORD = @pw";
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar).Value = this.Email;
+            cmd.Parameters.Add("@pw", System.Data.SqlDbType.NVarChar).Value = this.EncryptedPassword;
+
+            if ((int)cmd.ExecuteScalar() > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

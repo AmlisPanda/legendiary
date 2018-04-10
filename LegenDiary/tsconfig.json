@@ -10,7 +10,10 @@
     "strict": false,
     "types": [ "webpack-env" ],
     "emitBOM": false,
-    "charset": "utf8"
+    "charset": "utf8",
+    "paths": {
+      "history": [ "history/v2" ]
+    }
   },
   "exclude": [
       "bin",

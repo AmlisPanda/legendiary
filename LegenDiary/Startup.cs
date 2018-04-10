@@ -32,10 +32,17 @@ namespace LegenDiary
                 options.ConfigureWarnings(x => x.Ignore(RelationalEventId.AmbientTransactionWarning));
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(7);
+            });
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +64,12 @@ namespace LegenDiary
 
             app.UseStaticFiles();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
+                routes.MapRoute("user", "user/{*user}",
+           defaults: new { controller = "UserHome", action = "Index" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
@@ -67,6 +78,8 @@ namespace LegenDiary
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            
         }
     }
 }
