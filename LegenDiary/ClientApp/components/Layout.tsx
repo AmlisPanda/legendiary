@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 import { Header } from './Header';
-import { Nav } from './Nav';
-import { Popup } from './Popup';
-import { Footer } from './Footer';
-import { MainContent } from './MainContent';
 
+import { Footer } from './Footer';
+import { UserHome } from './UserHome';
+import { Home } from './Home';
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -50,22 +49,20 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
         const isLoggedIn = this.state.isUserConnected;
 
+        let content = null;
+        if (isLoggedIn) {
+            content = <UserHome />
+        }
+        else {
+            content = <Home />
+        }
+
         return (
             <div className="App">
 
                 <Header isLoggedIn={isLoggedIn} handlerLogout={this.handlerLogout} />
 
-                <div id="container">
-                    <MainContent isLoggedIn={isLoggedIn} handlerLogin={this.handlerLogin} />
-
-                    {isLoggedIn &&
-                        <Popup active={this.state.popupActive} handlerTogglePopup={this.handlerTogglePopup} />
-                    }
-                    {isLoggedIn &&
-                        <Nav handlerLogout={this.handlerLogout} handlerTogglePopup={this.handlerTogglePopup} />
-                    }
-                </div>
-
+                {content}
 
                 <Footer />
             </div>

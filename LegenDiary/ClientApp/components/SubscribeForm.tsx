@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { FormField } from './FormField';
-import { RouteComponentProps } from 'react-router';
 import { Subscriber } from './Models';
 /** Material UI */
 import TextField from 'material-ui/TextField';
@@ -97,6 +95,7 @@ export class SubscribeForm extends React.Component<{}, SubscribeFormState> {
             />,];
 
         return (
+            
             <ValidatorForm
                 id="subscribeForm"
                 ref="form"

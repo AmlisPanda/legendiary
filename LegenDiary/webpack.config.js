@@ -16,7 +16,9 @@ module.exports = (env) => {
                 'react-hot-loader/patch',
             ]
         },
-        resolve: { extensions: ['.js', '.jsx', '.ts', '.tsx', ".css", ".scss"] },
+        resolve: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx', ".css", ".scss"]
+        },
         output: {
             path: path.join(__dirname, bundleOutputDir),
             filename: '[name].js',

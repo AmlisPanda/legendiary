@@ -2,14 +2,12 @@ import * as React from 'react';
 import { Redirect, withRouter, RouteComponentProps } from 'react-router-dom'
 import { User } from './Models';
 /** Material UI */
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 
 export interface LoginFormProps {
-    handlerLogin: (ev: React.MouseEvent<HTMLButtonElement>) => void;
     router?: History;
 }
 export interface LoginFormState {
@@ -93,8 +91,8 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
 
         return (
-          
-            <ValidatorForm id="loginForm"
+
+            <ValidatorForm id="loginForm" ref="form"
                 onSubmit={this.handleSubmit}>
                 <h2>Déjà inscrit ? Connecte-toi !</h2>
 

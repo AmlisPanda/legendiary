@@ -16,17 +16,17 @@ export class MainContent extends React.Component<MainContentProps, {}> {
 
         let content = null;
 
-        if (isLoggedIn) {
-            content = <WidgetsList isLoggedIn={this.props.isLoggedIn} />
-        }
-        else {
-            content = (
-                <div id="homepageContent">
-                    <SubscribeForm />
-                    <LoginForm handlerLogin={this.props.handlerLogin} />
-                </div>
-            );
-        }
+        //if (isLoggedIn) {
+        //    content = <WidgetsList isLoggedIn={this.props.isLoggedIn} />
+        //}
+        //else {
+        //    content = (
+        //        <div id="homepageContent">
+        //            <SubscribeForm />
+        //            <LoginForm handlerLogin={this.props.handlerLogin} />
+        //        </div>
+        //    );
+        //}
 
         return (
             <div id="main">
