@@ -14,7 +14,7 @@ function renderApp() {
     ReactDOM.render(
         <MuiThemeProvider>
             <AppContainer>
-                <BrowserRouter children={ routes } basename={ baseUrl } />
+                <BrowserRouter children={routes} basename={baseUrl} />
             </AppContainer>
         </MuiThemeProvider>,
         document.getElementById('react-app')

@@ -50,19 +50,22 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         const isLoggedIn = this.state.isUserConnected;
 
         let content = null;
-        if (isLoggedIn) {
-            content = <UserHome />
-        }
-        else {
-            content = <Home />
-        }
+        //if (isLoggedIn) {
+        //    content = <UserHome />
+        //}
+        //else {
+        //    content = <Home />
+        //}
 
         return (
             <div className="App">
 
                 <Header isLoggedIn={isLoggedIn} handlerLogout={this.handlerLogout} />
 
-                {content}
+                <div id="container">
+                    {this.props.children}
+                </div>
+                
 
                 <Footer />
             </div>

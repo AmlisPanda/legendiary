@@ -38,7 +38,7 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
     public render() {
 
         return (
-            <div id="container">
+            <div>
                 <WidgetsList isLoggedIn={true} />
 
                 <Popup active={this.state.popupActive} handlerTogglePopup={this.handlerTogglePopup} />

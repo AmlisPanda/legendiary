@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, withRouter, RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router';
 import { User } from './Models';
 /** Material UI */
 import RaisedButton from 'material-ui/RaisedButton';
@@ -7,14 +7,13 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 
-export interface LoginFormProps {
-    router?: History;
+interface LoginFormProps {
+    onSuccess: (ev: React.MouseEvent<HTMLButtonElement>) => void;
 }
-export interface LoginFormState {
+interface LoginFormState {
     user: User;
     openDialog: boolean;
     dialogMsg: string;
-    
 }
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
@@ -34,6 +33,8 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    
+
     handleSubmit(e) {
         e.preventDefault();
 
@@ -42,7 +43,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
         let thisForm = this;
 
-        const { router } = this.props;
+        
 
         fetch('api/Users/Login',
             {
@@ -58,7 +59,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     thisForm.setState({ openDialog: true, dialogMsg: dialogMsg });
                 }
                 else {
-                    //router.push("/user");
+                    this.props.onSuccess(e);
                 }
             });
     }
@@ -124,5 +125,3 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         );
     }
 }
-
-export default withRouter(LoginForm);

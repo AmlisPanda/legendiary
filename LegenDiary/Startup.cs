@@ -67,8 +67,8 @@ namespace LegenDiary
             app.UseSession();
             app.UseMvc(routes =>
             {
-                routes.MapRoute("user", "user/{*user}",
-           defaults: new { controller = "UserHome", action = "Index" });
+           //     routes.MapRoute("user", "user/{*user}",
+           //defaults: new { controller = "UserHome", action = "Index" });
 
                 routes.MapRoute(
                     name: "default",
