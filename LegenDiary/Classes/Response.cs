@@ -20,4 +20,15 @@ namespace LegenDiary
             Message = message;
         }
     }
+
+    [DataContract]
+    public class LoginResponse : Response
+    {
+        [DataMember]
+        public int UserId { get; set; }
+
+        public LoginResponse(bool success, string message = "") : base(success, message)
+        {
+        }
+    }
 }

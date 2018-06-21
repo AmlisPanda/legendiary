@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { sessionService } from 'redux-react-session';
+
 import { SubscribeForm } from './SubscribeForm';
 import { LoginForm } from './LoginForm';
 
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -15,10 +19,15 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
         this.login = this.login.bind(this);
     }
 
-    login() {
-        alert("test");
-        this.props.history.push("user");
+    login(event, data) {
+        sessionService.saveSession();
+        sessionService.saveUser(data)
+
+        this.props.history.push("/user");
+        
     }
+
+    
 
     public render() {
 

@@ -1,12 +1,17 @@
 ﻿import * as React from 'react';
+import { sessionService } from 'redux-react-session';
+
 import { WidgetsList } from './WidgetsList';
 import { Nav } from './Nav';
 import { Popup } from './Popup';
+import { RouteComponentProps } from 'react-router';
 
-export interface UserHomeProps {
+
+export interface UserHomeProps extends RouteComponentProps<{}> {
+
 }
 interface UserHomeState {
-    isUserConnected: boolean;
+    userId: string;
     popupActive: boolean;
 }
 
@@ -14,16 +19,20 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
     constructor(props) {
         super(props);
         this.state = {
-            isUserConnected: false,
+            userId: "50",
             popupActive: false
         }
 
-        this.handlerLogout = this.handlerLogout.bind(this);
+        this.logout = this.logout.bind(this);
         this.handlerTogglePopup = this.handlerTogglePopup.bind(this);
     }
 
-    handlerLogout() {
-        this.setState({ isUserConnected: false })
+    logout() {
+
+        this.setState({ userId: "0" })
+        sessionService.deleteSession();
+        sessionService.deleteUser();
+        this.props.history.push('/');
     }
 
     handlerTogglePopup(e) {
@@ -43,7 +52,7 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
 
                 <Popup active={this.state.popupActive} handlerTogglePopup={this.handlerTogglePopup} />
 
-                <Nav handlerLogout={this.handlerLogout} handlerTogglePopup={this.handlerTogglePopup} />
+                <Nav handlerLogout={this.logout} handlerTogglePopup={this.handlerTogglePopup} />
             </div>
             
 

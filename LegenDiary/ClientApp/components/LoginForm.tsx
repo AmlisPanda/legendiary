@@ -8,7 +8,7 @@ import Dialog from 'material-ui/Dialog';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 
 interface LoginFormProps {
-    onSuccess: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+    onSuccess: (ev: React.MouseEvent<HTMLButtonElement>, data: object) => void;
 }
 interface LoginFormState {
     user: User;
@@ -43,7 +43,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
         let thisForm = this;
 
-        
+        const onSuccessFct = this.props.onSuccess;
 
         fetch('api/Users/Login',
             {
@@ -59,7 +59,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     thisForm.setState({ openDialog: true, dialogMsg: dialogMsg });
                 }
                 else {
-                    this.props.onSuccess(e);
+                    onSuccessFct(e, data);
                 }
             });
     }

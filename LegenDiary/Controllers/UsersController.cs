@@ -50,11 +50,11 @@ namespace LegenDiary.Controllers
         // POST: api/Users
         [HttpPost]
         [Route("Login")]
-        public Response Login([FromBody]User user)
+        public LoginResponse Login([FromBody]User user)
         {
             user.EncryptedPassword = EncryptPassword(user.Password);
 
-            Response resp = user.Authenticate(_configuration);
+            LoginResponse resp = user.Authenticate(_configuration);
 
             if (resp.Success)
             {

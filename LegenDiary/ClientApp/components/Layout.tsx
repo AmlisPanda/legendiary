@@ -1,39 +1,38 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { Route } from 'react-router-dom';
+import { instanceOf } from 'prop-types';
 
 import { Header } from './Header';
-
 import { Footer } from './Footer';
 import { UserHome } from './UserHome';
 import { Home } from './Home';
 
-export interface LayoutProps {
+interface LayoutProps {
     children?: React.ReactNode;
 }
 
 interface LayoutState {
-    isUserConnected: boolean;
+    userId: number;
     popupActive: boolean;
 }
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
+      
     constructor(props) {
         super(props);
         this.state = {
-            isUserConnected: false,
+            userId: 1,
             popupActive: false
         }
 
-        this.handlerLogin = this.handlerLogin.bind(this);
+
         this.handlerLogout = this.handlerLogout.bind(this);
         this.handlerTogglePopup = this.handlerTogglePopup.bind(this);
     }
 
-    handlerLogin() {
-        this.setState({ isUserConnected: true })
-    }
-
     handlerLogout() {
-        this.setState({ isUserConnected: false })
+        this.setState({ userId: 0 })
     }
 
     handlerTogglePopup(e) {
@@ -47,7 +46,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
     public render() {
 
-        const isLoggedIn = this.state.isUserConnected;
+        const isLoggedIn = this.state.userId > 0;
 
         let content = null;
         //if (isLoggedIn) {
@@ -56,6 +55,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         //else {
         //    content = <Home />
         //}
+
 
         return (
             <div className="App">

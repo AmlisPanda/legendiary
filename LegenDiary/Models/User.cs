@@ -89,10 +89,12 @@ namespace LegenDiary.Models
 
         }
 
-        public Response Authenticate(IConfiguration config)
+        public LoginResponse Authenticate(IConfiguration config)
         {
             bool success = false;
             string message = string.Empty;
+            int userId = 0;
+            LoginResponse res = new LoginResponse(success, message);
 
             using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
             {
@@ -100,17 +102,22 @@ namespace LegenDiary.Models
                 {
                     cn.Open();
 
-                    if (!CheckUser(cn))
-                        return new Response(false, "L'adresse mail ou le mot de passe est incorrect.");
+                    userId = FindUser(cn);
 
-                    success = true;
+                    if (userId == 0)
+                    {
+                        res.Message = "L'adresse mail ou le mot de passe est incorrect.";
+                        return res;
+                    }
+
+                    res.Success = true;
 
                 }
 
                 catch (Exception e)
                 {
                     // TODO : écrire des logs
-                    message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
+                    res.Message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
                 }
                 finally
                 {
@@ -118,24 +125,22 @@ namespace LegenDiary.Models
                 }
             }
 
+            res.UserId = userId;
 
-            return new Response(success, message);
+            return res;
         }
 
-        private bool CheckUser(SqlConnection cn)
+        private int FindUser(SqlConnection cn)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
-            cmd.CommandText = @"SELECT COUNT(AppUser_ID) FROM APPUSER WHERE EMAIL LIKE @email AND ENCRYPTED_PASSWORD = @pw";
+            cmd.CommandText = @"SELECT AppUser_ID FROM APPUSER WHERE EMAIL LIKE @email AND ENCRYPTED_PASSWORD = @pw";
             cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar).Value = this.Email;
             cmd.Parameters.Add("@pw", System.Data.SqlDbType.NVarChar).Value = this.EncryptedPassword;
 
-            if ((int)cmd.ExecuteScalar() > 0)
-            {
-                return true;
-            }
-            else
-                return false;
+            int userId = (int)cmd.ExecuteScalar();
+
+            return userId;
         }
     }
 }
