@@ -10,3 +10,12 @@ export class User {
     Password: string;
 }
 
+export class Widget {
+    WidgetId?: number;
+    Title: string;
+    Subtitle: string;
+    IsFavourite?: boolean;
+    WidgetData: string;
+    WidgetTypeId: number;
+    AppuserId: number;
+}

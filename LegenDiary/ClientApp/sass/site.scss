@@ -384,41 +384,45 @@ form {
 }
 
 #popupContainer.active {
-	visibility: visible;
-	z-index: 5;
-	background-color: $dark-color;
-	overflow: hidden;
-	background: rgba(0,0,0,0.3);
+    visibility: visible;
+    z-index: 5;
+    background-color: $dark-color;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
 
-	form {
-		background-color: #fff;
-		width: 60%;
-		height: 80%;
-		margin: 40px auto;
-		opacity: 1;
-		position: relative;
-		padding: 20px 40px;
+    > div {
+        background-color: #fff;
+        width: 60%;
+        height: 80%;
+        margin: 40px auto;
+        opacity: 1;
+        position: relative;
+        padding: 20px 40px;
 
-		label {
-			width: 100%;
+        label {
+            width: 100%;
             display: block;
-		}
-		section {
-			text-align: left;
-			display: flex;
-			.field {
-				flex-grow: 1;
-			}
-		}
+        }
 
-		.closeButton {
-			float: right;
-			cursor: pointer;
-		}
-		.closeButton:hover {
-			color: $main-color;
-		}
-	}
+        section {
+            text-align: left;
+            display: flex;
+
+            .field {
+                flex-grow: 1;
+            }
+        }
+
+        .closeButton {
+            z-index: 5;
+            float: right;
+            cursor: pointer;
+        }
+
+        .closeButton:hover {
+            color: $main-color;
+        }
+    }
 }
 
 #toolsNav {
