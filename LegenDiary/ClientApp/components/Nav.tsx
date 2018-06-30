@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NavItem } from './NavItem'
+import { UserSession } from './UserSession'
 
 export interface NavProps {
     handlerTogglePopup: (ev: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,7 +13,9 @@ export class Nav extends React.Component<NavProps> {
         this.state = {
             popupActive: false
         }
+
     }
+
 
 
     render() {

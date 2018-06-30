@@ -3,19 +3,21 @@ import { Widget } from './Models';
 import { FormField } from './FormField'
 import { WidgetContentForm } from './WidgetContentForm'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { sessionService } from 'redux-react-session';
+import { UserSession } from './UserSession';
 
+export interface CreateWidgetFormProps {
+    closePopup: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+}
 export interface CreateWidgetFormState {
     widget: Widget;
-    openDialog: boolean;
-    dialogMsg: string;
+    
 }
 
-export class CreateWidgetForm extends React.Component<{}, CreateWidgetFormState> {
+export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, CreateWidgetFormState> {
 
     constructor(props) {
         super(props);
-        const userData = sessionService.loadUser();
+        const userData = UserSession.getAuthenticatedUser();
         this.state = {
             widget: {
                 Title: "",
@@ -24,9 +26,7 @@ export class CreateWidgetForm extends React.Component<{}, CreateWidgetFormState>
                 AppuserId: userData.UserId,
                 WidgetTypeId: 0
             }
-            ,
-            openDialog: false,
-            dialogMsg: ""
+            
         }
         this.changeValue = this.changeValue.bind(this);
         this.typeChange = this.typeChange.bind(this);
@@ -56,8 +56,8 @@ export class CreateWidgetForm extends React.Component<{}, CreateWidgetFormState>
             .then(function (data) {
                 console.log(data);
                 let dialogMsg = data.Message;
-  
-                thisForm.setState({ openDialog: true, dialogMsg: "Widget créé" });
+
+                thisForm.props.closePopup(null);
 
             });
     }

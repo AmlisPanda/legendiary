@@ -59,7 +59,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     thisForm.setState({ openDialog: true, dialogMsg: dialogMsg });
                 }
                 else {
-                    onSuccessFct(e, data);
+                    onSuccessFct(e, data.UserData);
                 }
             });
     }

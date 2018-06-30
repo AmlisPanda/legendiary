@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
-import { instanceOf } from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -14,7 +15,7 @@ interface LayoutProps {
 
 interface LayoutState {
     userId: number;
-    popupActive: boolean;
+    popupActive?: boolean;
 }
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
@@ -22,7 +23,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props) {
         super(props);
         this.state = {
-            userId: 1,
+            userId: 0,
             popupActive: false
         }
 
@@ -49,12 +50,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         const isLoggedIn = this.state.userId > 0;
 
         let content = null;
-        //if (isLoggedIn) {
-        //    content = <UserHome />
-        //}
-        //else {
-        //    content = <Home />
-        //}
 
 
         return (
