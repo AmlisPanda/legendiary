@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegenDiary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -25,9 +26,20 @@ namespace LegenDiary
     public class LoginResponse : Response
     {
         [DataMember]
-        public int UserId { get; set; }
+        public User UserData { get; set; }
 
         public LoginResponse(bool success, string message = "") : base(success, message)
+        {
+        }
+    }
+
+    [DataContract]
+    public class WidgetsResponse : Response
+    {
+        [DataMember]
+        public List<Widget> WidgetsList { get; set; }
+
+        public WidgetsResponse(bool success, string message = "") : base(success, message)
         {
         }
     }

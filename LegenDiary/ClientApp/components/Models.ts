@@ -10,6 +10,12 @@ export class User {
     Password: string;
 }
 
+export class AuthenticatedUser {
+    UserId: number;
+    Email: string;
+    Login: string;
+}
+
 export class Widget {
     WidgetId?: number;
     Title: string;

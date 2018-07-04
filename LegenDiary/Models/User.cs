@@ -12,6 +12,8 @@ namespace LegenDiary.Models
     public class User
     {
         [DataMember]
+        public int UserId { get; set; }
+        [DataMember]
         public string Login { get; set; }
         [DataMember]
         public string Email { get; set; }
@@ -93,7 +95,7 @@ namespace LegenDiary.Models
         {
             bool success = false;
             string message = string.Empty;
-            int userId = 0;
+            User user = null;
             LoginResponse res = new LoginResponse(success, message);
 
             using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
@@ -102,9 +104,9 @@ namespace LegenDiary.Models
                 {
                     cn.Open();
 
-                    userId = FindUser(cn);
+                    user = FindUser(cn);
 
-                    if (userId == 0)
+                    if (user == null)
                     {
                         res.Message = "L'adresse mail ou le mot de passe est incorrect.";
                         return res;
@@ -125,22 +127,34 @@ namespace LegenDiary.Models
                 }
             }
 
-            res.UserId = userId;
+            res.UserData = user;
 
             return res;
         }
 
-        private int FindUser(SqlConnection cn)
+        private User FindUser(SqlConnection cn)
         {
+            User user = null;
+
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
-            cmd.CommandText = @"SELECT AppUser_ID FROM APPUSER WHERE EMAIL LIKE @email AND ENCRYPTED_PASSWORD = @pw";
+            cmd.CommandText = @"SELECT AppUser_ID, AppUser_Login FROM APPUSER WHERE EMAIL LIKE @email AND ENCRYPTED_PASSWORD = @pw";
             cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar).Value = this.Email;
             cmd.Parameters.Add("@pw", System.Data.SqlDbType.NVarChar).Value = this.EncryptedPassword;
 
-            int userId = (int)cmd.ExecuteScalar();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
 
-            return userId;
+                user = new User()
+                {
+                    UserId = reader.GetInt32(0),
+                    Login = reader.GetString(1)
+                };
+            }
+
+           
+            return user;
         }
     }
 }

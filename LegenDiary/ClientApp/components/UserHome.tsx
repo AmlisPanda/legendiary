@@ -36,7 +36,7 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
 
     handlerTogglePopup(e) {
 
-        e.stopPropagation();
+        //e.stopPropagation();
 
         this.setState((prevState) => {
             return { popupActive: !prevState.popupActive }

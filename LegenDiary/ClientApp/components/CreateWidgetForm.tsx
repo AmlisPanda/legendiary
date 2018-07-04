@@ -31,6 +31,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         this.changeValue = this.changeValue.bind(this);
         this.typeChange = this.typeChange.bind(this);
         this.createWidget = this.createWidget.bind(this);
+        this.updateData = this.updateData.bind(this);
     }
 
 
@@ -44,8 +45,15 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         this.setState({ widget });
     }
 
-    createWidget() {
-        let thisForm = this;
+    // Mise à jour de la data dans state
+    updateData(event, data) {
+        const { widget } = this.state;
+        widget.WidgetData = data;
+        this.setState({ widget });
+    }
+
+    createWidget(event) {
+
         fetch('api/Widgets',
             {
                 method: "post",
@@ -53,11 +61,10 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                 body: JSON.stringify(this.state.widget)
             })
             .then(function (response) { return response.json(); })
-            .then(function (data) {
-                console.log(data);
+            .then((data) => {
                 let dialogMsg = data.Message;
 
-                thisForm.props.closePopup(null);
+                this.props.closePopup(event);
 
             });
     }
@@ -94,7 +101,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                     </FormField>
                 </section>
 
-                <WidgetContentForm contentType={this.state.widget.WidgetTypeId} />
+                <WidgetContentForm contentType={this.state.widget.WidgetTypeId} updateDataHandler={this.updateData} />
 
                 <button className="buttonForm">Créer</button>
             </ValidatorForm>

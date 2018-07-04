@@ -229,6 +229,7 @@ form {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
+    width: calc(100% - 200px);
 }
 .widget {
 	background-color: #fff;

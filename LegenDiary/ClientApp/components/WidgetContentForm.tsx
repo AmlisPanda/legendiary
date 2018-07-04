@@ -1,9 +1,11 @@
 import * as React from 'react';
 import CKEditor from "react-ckeditor-component";
 import { FormField } from './FormField'
+import { TextWidgetForm } from './widgetContentForms/TextWidgetForm';
 
 export interface WidgetContentFormProps {
     contentType: number;
+    updateDataHandler: (ev: React.MouseEvent<HTMLElement>, data: string) => void;
 }
 
 export interface WidgetContentFormState {
@@ -23,9 +25,7 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
         const contentType = this.props.contentType;
         let content = null;
         if (contentType === 0) {
-            content = <CKEditor
-                content={this.state.content}
-            />;
+            content = <TextWidgetForm data={this.state.content} updateDataHandler={this.props.updateDataHandler} />
         }
         else if (contentType === 1) {
             content = (<input type="file" />)

@@ -22,9 +22,10 @@ namespace LegenDiary.Controllers
 
         // GET: api/Widgets
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("User/{id}")]
+        public WidgetsResponse GetUserWidgets(int id)
         {
-            return new string[] { "value1", "value2" };
+            return Widget.GetUserWidgets(_configuration, id);
         }
 
         // GET: api/Widgets/5

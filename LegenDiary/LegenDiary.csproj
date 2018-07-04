@@ -26,12 +26,14 @@
   <ItemGroup>
     <None Remove="ClientApp\components\Models.ts" />
     <None Remove="ClientApp\components\UserHome.tsx" />
+    <None Remove="ClientApp\components\UserSession.tsx" />
     <None Remove="ClientApp\components\Utils.tsx" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Models.ts" />
     <TypeScriptCompile Include="ClientApp\components\UserHome.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\UserSession.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utils.tsx" />
   </ItemGroup>
 

@@ -56,12 +56,6 @@ namespace LegenDiary.Controllers
 
             LoginResponse resp = user.Authenticate(_configuration);
 
-            if (resp.Success)
-            {
-                //System.Web.HttpContext.Current.Session["User"] = user;
-                HttpContext.Session.SetString("UserLogin", user.Email);
-            }
-
             return resp;
         }
 
