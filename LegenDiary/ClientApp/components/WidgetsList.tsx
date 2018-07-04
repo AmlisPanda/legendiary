@@ -1,20 +1,51 @@
 import * as React from 'react';
-import { Widget } from './Widget';
+import { Widget } from './Models';
+import { WidgetElement } from './WidgetElement';
+import { UserSession } from './UserSession';
 
-export interface WidgetsListProps {
+interface WidgetsListProps {
     isLoggedIn: boolean;
 }
 
-export class WidgetsList extends React.Component<WidgetsListProps> {
+interface WidgetsListState {
+    widgets: Widget[];
+    userId: number;
+    loading: boolean;
+}
+
+export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListState> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            widgets: [],
+            loading: true,
+            userId: UserSession.getAuthenticatedUser() ? UserSession.getAuthenticatedUser().UserId : 0,
+        };
+
+        fetch('api/Widgets/User/' + this.state.userId).then(
+                response => response.json()
+            )
+            .then(data => {
+                
+                this.setState({ widgets: data.WidgetsList, loading: false });
+            });
+    }
     render() {
         return (
             <div id="widgetsList">
-                
-                <Widget
-                    title="Citation du jour"
-                    description="Confucius"
-                    isLoggedIn={this.props.isLoggedIn}
-                />
+                {this.state.widgets.map(widget =>
+                    <WidgetElement
+                        id={widget.WidgetId}
+                        key={widget.WidgetId}
+                        title={widget.Title}
+                        description={widget.Subtitle}
+                        widgetType={widget.WidgetTypeId}
+                        data={widget.WidgetData}
+                        isLoggedIn={true}
+                    />
+                )}
+            
              
             </div>
 

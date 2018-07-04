@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Widget } from './Widget.js'
 import { ListWidgetListItem } from './ListWidgetListItem.js'
 
 type ListItem = {

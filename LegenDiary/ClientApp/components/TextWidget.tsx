@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Widget } from './Widget.js';
 
 export interface TextWidgetProps {
     html: string;

@@ -1,9 +1,13 @@
 import * as React from 'react';
+import { TextWidget } from './TextWidget';
 
 
 export interface WidgetProps {
+    id: number;
     title: string;
     description: string;
+    widgetType: number;
+    data: string;
     cn?: string;
     w?: number;
     h?: number;
@@ -13,7 +17,7 @@ export interface WidgetState {
     isFavourite: boolean;
     cn: string;
 }
-export class Widget extends React.Component<WidgetProps, WidgetState> {
+export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,7 +37,16 @@ export class Widget extends React.Component<WidgetProps, WidgetState> {
 
 	handleFavMouseOver() {
 
-	}
+    }
+
+    getWidgetContent() {
+        switch (this.props.widgetType) {
+            case 0:
+                return <TextWidget html={this.props.data} />;
+            default:
+                return <TextWidget html={"Contenu non géré pour l'instant"} />;
+        }
+    }
 
 	render() {
 		const isFav = this.state.isFavourite;
@@ -60,7 +73,9 @@ export class Widget extends React.Component<WidgetProps, WidgetState> {
 					</div>
 
 				</header>
-				<div className="widgetContent">{this.props.children}</div>
+                <div className="widgetContent">
+                    {this.getWidgetContent()}
+                </div>
 			</div>
 		)
 	}
