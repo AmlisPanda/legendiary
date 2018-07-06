@@ -7,10 +7,10 @@ import { UserSession } from './UserSession';
 
 export interface CreateWidgetFormProps {
     closePopup: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+    widget?: Widget;
 }
 export interface CreateWidgetFormState {
     widget: Widget;
-    
 }
 
 export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, CreateWidgetFormState> {
@@ -18,15 +18,20 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
     constructor(props) {
         super(props);
         const userData = UserSession.getAuthenticatedUser();
-        this.state = {
-            widget: {
+        let currentWidget: Widget;
+        if (this.props.widget)
+            currentWidget = this.props.widget;
+        else
+            currentWidget = {
                 Title: "",
                 Subtitle: "",
                 WidgetData: "",
                 AppuserId: userData.UserId,
                 WidgetTypeId: 0
             }
-            
+        console.log(this.props.widget);
+        this.state = {
+            widget: currentWidget
         }
         this.changeValue = this.changeValue.bind(this);
         this.typeChange = this.typeChange.bind(this);
@@ -70,12 +75,15 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
     }
 
     render() {
+
+        let title = (this.props.widget) ? "Modification du widget" : "Crée ton widget";
+
         return (
 
             <ValidatorForm id="widgetForm" ref="form"
                 onSubmit={this.createWidget}>
 
-                <h2>Crée ton widget</h2>
+                <h2>{title}</h2>
 
                 <TextValidator name="Title" fullWidth={true} floatingLabelText="Titre"
                     value={this.state.widget.Title}
@@ -101,9 +109,9 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                     </FormField>
                 </section>
 
-                <WidgetContentForm contentType={this.state.widget.WidgetTypeId} updateDataHandler={this.updateData} />
+                <WidgetContentForm data={this.state.widget.WidgetData} contentType={this.state.widget.WidgetTypeId} updateDataHandler={this.updateData} />
 
-                <button className="buttonForm">Créer</button>
+                <button className="buttonForm">Sauvegarder</button>
             </ValidatorForm>
         );
     }

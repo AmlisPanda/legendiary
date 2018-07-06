@@ -4,6 +4,7 @@ import { FormField } from './FormField'
 import { TextWidgetForm } from './widgetContentForms/TextWidgetForm';
 
 export interface WidgetContentFormProps {
+    data: string;
     contentType: number;
     updateDataHandler: (ev: React.MouseEvent<HTMLElement>, data: string) => void;
 }
@@ -17,7 +18,7 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
     constructor(props) {
         super(props);
         this.state = {
-            content: ''
+            content: this.props.data
         }
     }
 

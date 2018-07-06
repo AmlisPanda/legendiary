@@ -2,6 +2,7 @@
     "name": "legendiary",
     "private": true,
     "version": "0.0.1",
+    "author": "C�line RUAN",
     "devDependencies": {
         "@types/history": "4.6.0",
         "@types/react": "15.0.35",
@@ -26,6 +27,7 @@
         "jquery": "3.2.1",
         "json-loader": "0.5.4",
         "node-sass": "^4.8.3",
+        "react-grid-layout": "^0.16.6",
         "react-hot-loader": "3.0.0-beta.7",
         "react-redux": "^5.0.7",
         "react-router": "^4.3.1",

@@ -3,7 +3,7 @@ import { MouseEventHandler, EventHandler, MouseEvent } from 'react';
 import { CreateWidgetForm } from './CreateWidgetForm'
 
 export interface PopupProps {
-    handlerTogglePopup: (ev: React.MouseEvent<HTMLElement>) => void;
+    closePopup: (ev: React.MouseEvent<HTMLElement>) => void;
 }
 
 export class Popup extends React.Component<PopupProps> {
@@ -19,14 +19,14 @@ export class Popup extends React.Component<PopupProps> {
 
     render() {
         return(
-            <div id="popupContainer" className="active" onClick={this.props.handlerTogglePopup}>
+            <div id="popupContainer" className="active" onClick={this.props.closePopup}>
 
-                <div onClick={this.formClick}>
-                    <a title="Fermer" className="closeButton" onClick={this.props.handlerTogglePopup}>
+                <div className="popup" onClick={this.formClick}>
+                    <a title="Fermer" className="closeButton" onClick={this.props.closePopup}>
                         <i className="fa-2x fas fa-window-close"></i>
                     </a>
 
-                    <CreateWidgetForm closePopup={this.props.handlerTogglePopup} />
+                    {this.props.children}
                 </div>
             </div>
         )

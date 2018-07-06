@@ -50,8 +50,9 @@ namespace LegenDiary.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Response Delete(int id, int userId)
         {
+            return Widget.Delete(_configuration, id);
         }
     }
 }
