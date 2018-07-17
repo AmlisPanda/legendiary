@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { TextWidget } from './TextWidget';
+import { TextWidget } from './widgetContent/TextWidget';
+import { ImageWidget } from './widgetContent/ImageWidget';
 import { Widget } from './Models';
 import { CreateWidgetForm } from './CreateWidgetForm';
 import Dialog from 'material-ui/Dialog';
@@ -7,7 +8,6 @@ import FlatButton from 'material-ui/FlatButton';
 
 export interface WidgetProps {
     widget: Widget;
-    cn?: string;
     w?: number;
     h?: number;
     isLoggedIn: boolean;
@@ -17,14 +17,12 @@ export interface WidgetProps {
 }
 export interface WidgetState {
     isFavourite: boolean;
-    cn: string;
     openConfirm: boolean;
 }
 export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
 	constructor(props) {
 		super(props);
 		this.state = {
-			cn: "widget " + this.props.cn,
             isFavourite: false,
             openConfirm: false
 		}
@@ -65,6 +63,8 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
         switch (this.props.widget.WidgetTypeId) {
             case 0:
                 return <TextWidget html={this.props.widget.WidgetData} />;
+            case 1:
+                return <ImageWidget path={this.props.widget.WidgetData} />
             default:
                 return <TextWidget html={"Contenu non géré pour l'instant"} />;
         }
@@ -86,8 +86,8 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
 
         const w = this.props.widget;
 
-		return (
-			<div className={this.state.cn} >
+        return (
+            <div className="widget" data-wid={this.props.widget.WidgetId} >
 				<div className="grip">
 					<i className="fas fa-expand-arrows-alt" title="Agrandir"></i>
 					{ this.props.isLoggedIn &&

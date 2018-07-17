@@ -8,7 +8,7 @@ namespace LegenDiary.Models
     {
         public virtual DbSet<Appuser> Appuser { get; set; }
         public virtual DbSet<Widget> Widget { get; set; }
-        public virtual DbSet<WidgetType> WidgetType { get; set; }
+        //public virtual DbSet<WidgetType> WidgetType { get; set; }
 
         public LEGENDIARYContext(DbContextOptions<LEGENDIARYContext> options)
             : base(options)
@@ -78,24 +78,24 @@ namespace LegenDiary.Models
                     .HasForeignKey(d => d.AppuserId)
                     .HasConstraintName("FK_WIDGET_APPUSER");
 
-                entity.HasOne(d => d.WidgetType)
-                    .WithMany(p => p.Widget)
-                    .HasForeignKey(d => d.WidgetTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_WIDGET_WIDGET_TYPE");
+                //entity.HasOne(d => d.WidgetType)
+                //    .WithMany(p => p.Widget)
+                //    .HasForeignKey(d => d.WidgetTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_WIDGET_WIDGET_TYPE");
             });
 
-            modelBuilder.Entity<WidgetType>(entity =>
-            {
-                entity.ToTable("WIDGET_TYPE");
+            //modelBuilder.Entity<WidgetType>(entity =>
+            //{
+            //    entity.ToTable("WIDGET_TYPE");
 
-                entity.Property(e => e.WidgetTypeId).HasColumnName("WIDGET_TYPE_ID");
+            //    entity.Property(e => e.WidgetTypeId).HasColumnName("WIDGET_TYPE_ID");
 
-                entity.Property(e => e.Label)
-                    .IsRequired()
-                    .HasColumnName("LABEL")
-                    .HasMaxLength(150);
-            });
+            //    entity.Property(e => e.Label)
+            //        .IsRequired()
+            //        .HasColumnName("LABEL")
+            //        .HasMaxLength(150);
+            //});
         }
     }
 }

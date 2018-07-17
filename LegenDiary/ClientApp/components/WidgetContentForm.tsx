@@ -2,6 +2,7 @@ import * as React from 'react';
 import CKEditor from "react-ckeditor-component";
 import { FormField } from './FormField'
 import { TextWidgetForm } from './widgetContentForms/TextWidgetForm';
+import { ImageWidgetForm } from './widgetContentForms/ImageWidgetForm';
 
 export interface WidgetContentFormProps {
     data: string;
@@ -29,7 +30,7 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
             content = <TextWidgetForm data={this.state.content} updateDataHandler={this.props.updateDataHandler} />
         }
         else if (contentType === 1) {
-            content = (<input type="file" />)
+            content = <ImageWidgetForm data={this.state.content} updateDataHandler={this.props.updateDataHandler} />
         }
         else if (contentType === 2) {
             content =

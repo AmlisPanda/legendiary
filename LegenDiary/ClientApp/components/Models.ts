@@ -24,4 +24,16 @@ export class Widget {
     WidgetData: string;
     WidgetTypeId: number;
     AppuserId: number;
+    Width: number;
+    Height: number;
+    X: number;
+    Y: number;
+}
+export class WidgetLayout {
+    Id: string;
+    WidgetId?: number;
+    Width: number;
+    Height: number;
+    X: number;
+    Y: number;
 }

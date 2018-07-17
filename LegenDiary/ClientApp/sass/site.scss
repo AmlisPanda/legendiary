@@ -42,10 +42,10 @@ button {
 }
 
 .App-header {
-	background-color: #fff;
+	background-color: white;
     height: 85px;
     padding: 10px;
-    color: black;
+    color: $dark-color;
     /* position: absolute; */
     width: 100%;
     /* top: 0; */
@@ -53,7 +53,7 @@ button {
     /* box-sizing: border-box; */
     overflow: hidden;
 	i {
-		color: $main-color;
+
 	}
 }
 
@@ -230,14 +230,17 @@ form {
 	grid-gap: 10px;
     width: calc(100% - 200px);
 }
+.react-grid-layout {
+    overflow: hidden;
+}
+.react-grid-item {
+    background-color: #fff;
+    border-radius: 10px;
+    border-bottom-right-radius: 0;
+}
 .widget {
-	background-color: #fff;
 	padding: 7px 15px 7px 30px;
-	margin: 0 15px 15px 0;
-	float: left;
-	position: relative;
-	border-radius: 10px;
-    min-height: 100px;
+    overflow: auto;
 
 	.grip {
 		width: 22px;
@@ -295,6 +298,10 @@ form {
 	.widgetContent {
 		font-size: 1em;
 	}
+
+    .widgetImg {
+        max-width: 400px;
+    }
 }
 
 .imageWidget img {
@@ -378,7 +385,7 @@ form {
     visibility: hidden;
     position: absolute;
     width: 100vw;
-    height: calc(100vh - 110px);
+    height: calc(100vh - 85px);
     flex-grow: 1;
     top: 0;
     left: 0;
@@ -467,6 +474,7 @@ footer {
 	text-align: center;
 	font-size: 0.8em;
 	line-height: 25px;
+    display: none;
 	a {
 		color: white;
 		text-decoration: none;

@@ -27,9 +27,10 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                 Subtitle: "",
                 WidgetData: "",
                 AppuserId: userData.UserId,
-                WidgetTypeId: 0
+                WidgetTypeId: 0,
+                X: 0, Y: 0, Width: 1, Height: 1 
             }
-        console.log(this.props.widget);
+
         this.state = {
             widget: currentWidget
         }
@@ -41,7 +42,9 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
 
 
     typeChange(e) {
-        //this.setState({ widget: { WidgetTypeId: e.target.value } })
+        let w = { ...this.state.widget };
+        w.WidgetTypeId = Number(e.target.value);
+        this.setState({ widget: w });
     }
 
     changeValue(event) {
@@ -59,7 +62,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
 
     createWidget(event) {
 
-        fetch('api/Widgets',
+        fetch('api/Widgets/Save',
             {
                 method: "post",
                 headers: { 'Content-Type': 'application/json' },

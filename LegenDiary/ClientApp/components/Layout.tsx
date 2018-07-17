@@ -2,7 +2,6 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -16,6 +15,8 @@ interface LayoutProps {
 interface LayoutState {
     userId: number;
     popupActive?: boolean;
+    containerWidth: number;
+    containerHeight: number;
 }
 
 export class Layout extends React.Component<LayoutProps, LayoutState> {
@@ -24,12 +25,21 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         super(props);
         this.state = {
             userId: 0,
-            popupActive: false
+            popupActive: false,
+            containerWidth: 0,
+            containerHeight: 0
         }
 
 
         this.handlerLogout = this.handlerLogout.bind(this);
         this.handlerTogglePopup = this.handlerTogglePopup.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            containerWidth: window.innerWidth,
+            containerHeight: window.innerHeight - 200
+        });
     }
 
     handlerLogout() {
@@ -49,15 +59,16 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
         const isLoggedIn = this.state.userId > 0;
 
-        let content = null;
-
+        const containerStyle = {
+            height: this.state.containerHeight
+        }
 
         return (
             <div className="App">
 
                 <Header isLoggedIn={isLoggedIn} handlerLogout={this.handlerLogout} />
 
-                <div id="container">
+                <div id="container" style={containerStyle}>
                     {this.props.children}
                 </div>
                 

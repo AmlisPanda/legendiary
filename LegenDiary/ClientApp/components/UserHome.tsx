@@ -1,6 +1,4 @@
 ﻿import * as React from 'react';
-import { sessionService } from 'redux-react-session';
-import { connect } from 'react-redux';
 import { Widget } from './Models';
 import { WidgetsList } from './WidgetsList';
 import { Nav } from './Nav';
@@ -68,6 +66,24 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         });
     }
 
+    // Modification du layout
+    editLayout(layout, layouts) {
+        console.log(layouts);
+        if (layouts) {
+            fetch('api/Widgets/EditLayout', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(layouts)
+            }).then(
+                response => response.json()
+                );
+        }
+        
+    }
+
     logout() {
 
         UserSession.logout();
@@ -112,7 +128,15 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
 
         return (
             <div>
-                <WidgetsList isLoggedIn={true} widgets={this.state.widgets} userId={this.state.userId} deleteWidgetHandler={this.deleteWidget} editWidget={this.editWidget} closePopup={this.closePopup} />
+                <WidgetsList
+                    isLoggedIn={true}
+                    widgets={this.state.widgets}
+                    userId={this.state.userId}
+                    deleteWidgetHandler={this.deleteWidget}
+                    editWidget={this.editWidget}
+                    editLayout={this.editLayout}
+                    closePopup={this.closePopup}
+                />
 
                 {popupComponent}
 

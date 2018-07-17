@@ -37,11 +37,19 @@ namespace LegenDiary.Controllers
         
         // POST: api/Widgets
         [HttpPost]
+        [Route("Save")]
         public Response Post([FromBody]Widget w)
         {
             return w.Save(_configuration);
         }
-        
+
+        [HttpPost]
+        [Route("EditLayout")]
+        public Response EditLayout([FromBody]WidgetLayout[] lg)
+        {
+            return Widget.SaveLayout(_configuration, lg);
+        }
+
         // PUT: api/Widgets/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
