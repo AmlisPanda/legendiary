@@ -22,11 +22,12 @@ export class Nav extends React.Component<NavProps> {
     render() {
         return (
             <nav id="toolsNav">
-                <NavItem iconCn="fas fa-plus fa-4x" label="Nouveau widget" handlerClick={this.props.createWidget} />
-                <NavItem iconCn="fas fa-user-circle fa-4x" label="Mon profil" />
-                <NavItem iconCn="far fa-star fa-4x" label="Préférences" />
-                <NavItem iconCn="fas fa-share-alt fa-4x" label="Partager" />
-                <NavItem iconCn="fas fa-sign-out-alt fa-4x red" label="Se déconnecter" handlerClick={this.props.handlerLogout} />
+                <NavItem iconCn="fas fa-plus fa-lg" label="Nouveau widget" handlerClick={this.props.createWidget} />
+                <NavItem iconCn="fas fa-file-alt fa-lg" label="Affichage" />
+                <NavItem iconCn="fas fa-user-circle fa-lg" label="Mon profil" />
+                <NavItem iconCn="far fa-star fa-lg" label="Préférences" />
+                <NavItem iconCn="fas fa-share-alt fa-lg" label="Partager" />
+                <NavItem iconCn="fas fa-sign-out-alt fa-lg red" label="Se déconnecter" handlerClick={this.props.handlerLogout} />
             </nav>
         );
     }

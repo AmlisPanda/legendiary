@@ -39,15 +39,12 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
         this.props.editWidget(e, widget);
     }
 
-    onLayoutChange = (layout, layouts) => {
-
-    }
 
     render() {
 
         const cols = { lg: 8, md: 6, sm: 4, xs: 2, xxs: 1 };
         return (
-            <ResponsiveGridLayout key="widgetsList" className="layout" margin={[20, 20]} cols={cols} onLayoutChange={this.props.editLayout}>
+            <ResponsiveGridLayout key="widgetsList" className="layout" margin={[20, 20]} cols={cols} onLayoutChange={this.props.editLayout} draggableHandle={".grip, .widgetHeader"}>
                 {this.props.widgets.map(widget =>
                     <div key={"widget_" + widget.WidgetId} data-grid={{ x: widget.X, y: widget.Y, w: widget.Width, h: widget.Height, isResizable: true }}>
                         <WidgetElement

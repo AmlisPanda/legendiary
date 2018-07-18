@@ -79,7 +79,7 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
                 body: JSON.stringify(layouts)
             }).then(
                 response => response.json()
-                );
+            );
         }
         
     }

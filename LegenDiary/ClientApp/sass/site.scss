@@ -42,24 +42,26 @@ button {
 }
 
 .App-header {
-	background-color: white;
-    height: 85px;
-    padding: 10px;
-    color: $dark-color;
+    height: 40px;
+    background-color: $dark-color;
+    padding: 5px 15px;
     /* position: absolute; */
     width: 100%;
     /* top: 0; */
     -webkit-box-sizing: border-box;
     /* box-sizing: border-box; */
     overflow: hidden;
+    color: white;
+
 	i {
 
 	}
 }
 
 .App-title {
-  font-size: 1.5em;
-  float: left;
+    font-size: 1.5em;
+    float: left;
+    margin: 0;
 }
 
 
@@ -70,7 +72,6 @@ button {
 	height: 30px;
 	font-size: 1.2em;
 	line-height: 40px;
-	padding: 10px;
 	margin: auto;
 	color: black;
 	display: flex;
@@ -79,7 +80,7 @@ button {
 	a {
 		flex: 1;
 		text-decoration: none;
-		color: #000;
+		color: #fff;
 		cursor: pointer;
 	}
 
@@ -92,11 +93,18 @@ button {
 	}
 }
 
+#rightHeader {
+    float: right;
+    line-height: 30px;
+
+    #hamburgerIcon {
+        cursor: pointer;
+    }
+}
 
 #userBlock {
-	float: right;
-	font-size: 1.2em;
-	line-height: 65px;
+    display: inline-block;
+    padding: 0 15px;
 
 	button {
 		color: $main-color;
@@ -127,6 +135,7 @@ button {
 
 #container {
 	width: 100%;
+    height: calc(100vh - #{$header-height});
 	position: relative;
     padding: 15px;
 }
@@ -139,12 +148,15 @@ button {
     overflow: hidden;
 }
 
-
-form {
+#homepageContent form {
     background-color: white;
     padding: 25px 20px 40px;
     opacity: 0.8;
     font-size: 1.2em;
+}
+
+form {
+ 
 
 
     h2 {
@@ -239,93 +251,110 @@ form {
     border-bottom-right-radius: 0;
 }
 .widget {
-	padding: 7px 15px 7px 30px;
-    overflow: auto;
+    padding: 7px 15px 7px 30px;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
 
-	.grip {
-		width: 22px;
-		padding: 10px 0px;
-		height: 100%;
-		background-color: $dark-color;
-		position: absolute;
-		top: 0;
-		left: 0;
-		box-sizing: border-box;
-		text-align: center;
-		cursor: move;
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
+    .grip {
+        width: 22px;
+        padding: 10px 0px;
+        height: 100%;
+        background-color: $dark-color;
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: move;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
 
-		i {
-			color: white;
-			cursor: pointer;
-			margin-bottom: 8px;
-		}
-		i:hover {
-			color: $main-color;
-		}
+        i {
+            color: white;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
 
-	}
-	header {
-		margin-bottom: 10px;
-		position: relative;
-	}
+        i:hover {
+            color: $main-color;
+        }
+    }
 
-	h2 {
-		font-size: 1.5em;
-		margin: 0;
-		width: 90%;
-		text-align: left;
-		color: $main-color;
-		font-weight: normal;
-	}
+    header.widgetHeader {
+        height: 50px;
+        cursor: move;
+        width: calc(100% - 25px);
+    }
 
-	.widgetFav {
-		cursor: pointer;
-		i {
-			position: absolute;
-			top: 3px;
-			right: 0;
-			color: red;
-		}
-	}
+    
 
-	p.description {
-		margin: 0;
-		font-size: 1em;
-		font-style: italic;
-	}
-	.widgetContent {
-		font-size: 1em;
-	}
+    h2 {
+        font-size: 1.4em;
+        margin: 0;
+        width: 90%;
+        text-align: left;
+        color: $main-color;
+        font-weight: normal;
+    }
+
+    .widgetFav {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        i {
+            color: red;
+        }
+    }
+
+    p.description {
+        margin: 0;
+        font-size: 1em;
+        font-style: italic;
+    }
+
+    .widgetContent {
+        font-size: 1em;
+        overflow: auto;
+        height: calc(100% - 50px);
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+    }
 
     .widgetImg {
-        max-width: 400px;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        max-width: 100%;
+        max-height: 90%;
     }
 }
 
-.imageWidget img {
-	max-width: 400px;
-}
 
-.listWidget {
+.listWidgetForm {
 
-	form {
-		text-align: left;
+	text-align: left;
 
-		.listTyping {
-			display: flex;
+	.listTyping {
+		display: flex;
 
-			input {
-				flex-grow: 4;
-				width: auto;
-			}
+		input {
+			flex-grow: 4;
+			width: auto;
+            font-size: 1em;
+		}
 
-			button:hover {
-				color: $main-color;
-			}
+		button:hover {
+			color: $main-color;
 		}
 	}
+
 
 	ul {
 		margin-left: 5px;
@@ -437,31 +466,38 @@ form {
 }
 
 #toolsNav {
-	width: 200px;
-	margin-top: 25px;
-	position: absolute;
-	right: 0;
-	top: 0;
-	text-align: center;
-	font-size: 1.2em;
-	padding-right: 20px;
-	display: flex;
-	flex-direction: column;
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1.2em;
+    flex-direction: column;
+    background-color: #1A1A1A;
+    padding: 0 15px;
 
-	a {
-		flex-grow: 1;
-		color: white;
-		text-decoration: none;
-		margin-bottom: 30px;
-		cursor: pointer;
+    a {
+        height: 50px;
+        line-height: 50px;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 30px;
+        cursor: pointer;
 
-		span {
-			display: block;
-		}
-	}
-	a:hover {
-		color: $main-color;
-	}
+        i {
+            float: left;
+            line-height: 50px;
+            width: 40px;
+        }
+
+        span {
+            display: block;
+        }
+    }
+
+    a:hover {
+        color: $main-color;
+    }
 }
 
 footer {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextWidget } from './widgetContent/TextWidget';
 import { ImageWidget } from './widgetContent/ImageWidget';
+import { ListWidget } from './widgetContent/ListWidget';
 import { Widget } from './Models';
 import { CreateWidgetForm } from './CreateWidgetForm';
 import Dialog from 'material-ui/Dialog';
@@ -65,6 +66,8 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
                 return <TextWidget html={this.props.widget.WidgetData} />;
             case 1:
                 return <ImageWidget path={this.props.widget.WidgetData} />
+            case 2:
+                return <ListWidget listType={1} data={this.props.widget.WidgetData} />
             default:
                 return <TextWidget html={"Contenu non géré pour l'instant"} />;
         }
@@ -98,17 +101,15 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
 					}
 
 				</div>
-                <header>
+                <header className="widgetHeader">
                     <h2 onClick={this.handleFavClick}>{w.Title}</h2>
                     <p className="description">{w.Subtitle}</p>
-
-					<div className="widgetFav" onClick={this.handleFavClick} onMouseOver={this.handleFavMouseOver}>
-						{isFav ?
-							(<i className="fa-heart fa-lg fas"></i>) : (<i className="fa-heart fa-lg far"></i>)
-						}
-					</div>
-
-				</header>
+                </header>
+                <div className="widgetFav" onClick={this.handleFavClick} onMouseOver={this.handleFavMouseOver}>
+                    {isFav ?
+                        (<i className="fa-heart fa-lg fas"></i>) : (<i className="fa-heart fa-lg far"></i>)
+                    }
+                </div>
                 <div className="widgetContent">
                     {this.getWidgetContent()}
                 </div>

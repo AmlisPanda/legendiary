@@ -240,15 +240,21 @@ namespace LegenDiary.Models
 
         }
 
-
-        public static Response SaveLayout(IConfiguration config, WidgetLayout[] layouts)
+        /// <summary>
+        /// Enregistrement des positions dans le layout des widgets
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="layout"></param>
+        /// <returns></returns>
+        public static Response SaveLayout(IConfiguration config, GridLayout layout)
         {
             bool success = false;
             string message = string.Empty;
             SqlCommand cmd;
-            WidgetLayout layout;
+            WidgetPosition[] positions = layout.Positions;
+            WidgetPosition position;
 
-            if (layouts == null || layouts.Length == 0)
+            if (layout == null || positions.Length == 0)
             {
                 message = "Aucun layout à modifier";
                 return new Response(success, message);
@@ -256,10 +262,10 @@ namespace LegenDiary.Models
 
             // Création des requêtes
             StringBuilder sbQuery = new StringBuilder();
-            for (int i = 0; i < layouts.Length; i++)
+            for (int i = 0; i < positions.Length; i++)
             {
-                layout = layouts[i];
-                sbQuery.AppendLine($"UPDATE [WIDGET] SET WIDTH = {layout.Width}, HEIGHT = {layout.Height}, X = {layout.X}, Y = {layout.Y} WHERE WIDGET_ID = {layout.WidgetId};");
+                position = positions[i];
+                sbQuery.AppendLine($"UPDATE [WIDGET] SET WIDTH = {position.Width}, HEIGHT = {position.Height}, X = {position.X}, Y = {position.Y} WHERE WIDGET_ID = {position.WidgetId};");
             }
 
             using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))

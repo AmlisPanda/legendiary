@@ -45,9 +45,9 @@ namespace LegenDiary.Controllers
 
         [HttpPost]
         [Route("EditLayout")]
-        public Response EditLayout([FromBody]WidgetLayout[] lg)
+        public Response EditLayout([FromBody]GridLayout layout)
         {
-            return Widget.SaveLayout(_configuration, lg);
+            return Widget.SaveLayout(_configuration, layout);
         }
 
         // PUT: api/Widgets/5

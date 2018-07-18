@@ -3,7 +3,6 @@ import { MenuItem } from './MenuItem'
 
 export interface MenuProps {
     selectedItem: number;
-    isLoggedIn: boolean;
 }
 export interface MenuState {
     selectedIndex: number;
@@ -21,9 +20,10 @@ export class Menu extends React.Component<MenuProps, MenuState> {
 	render() {
 		return (
 			<nav id="nav">
-				<MenuItem label="Accueil" isSelected={this.state.selectedIndex === 0} />
-				<MenuItem label="Mes widgets" isSelected={this.state.selectedIndex === 1} />
-				<MenuItem label="Rechercher un bujo" isSelected={this.state.selectedIndex === 2} />
+				<MenuItem label="Jour" isSelected={this.state.selectedIndex === 0} />
+				<MenuItem label="Semaine" isSelected={this.state.selectedIndex === 1} />
+                <MenuItem label="Mois" isSelected={this.state.selectedIndex === 2} />
+                <MenuItem label="Année" isSelected={this.state.selectedIndex === 3} />
 			</nav>
 		);
 	}

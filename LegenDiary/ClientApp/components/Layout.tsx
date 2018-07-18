@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { UserSession } from './UserSession';
 
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -24,7 +24,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props) {
         super(props);
         this.state = {
-            userId: 0,
+            userId: UserSession.getAuthenticatedUser() ? UserSession.getAuthenticatedUser().UserId : 0,
             popupActive: false,
             containerWidth: 0,
             containerHeight: 0
@@ -57,8 +57,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
     public render() {
 
-        const isLoggedIn = this.state.userId > 0;
-
         const containerStyle = {
             height: this.state.containerHeight
         }
@@ -66,9 +64,9 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         return (
             <div className="App">
 
-                <Header isLoggedIn={isLoggedIn} handlerLogout={this.handlerLogout} />
+                <Header userId={this.state.userId} />
 
-                <div id="container" style={containerStyle}>
+                <div id="container">
                     {this.props.children}
                 </div>
                 

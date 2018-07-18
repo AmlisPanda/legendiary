@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace LegenDiary.Models
 {
     [DataContract]
-    public class WidgetLayout
+    public class WidgetPosition
     {
         [DataMember(Name = "i")]
         public string Id { get; set; }
-        [DataMember(Name="w")]
+        [DataMember(Name = "w")]
         public int Width { get; set; }
         [DataMember(Name = "h")]
         public int Height { get; set; }

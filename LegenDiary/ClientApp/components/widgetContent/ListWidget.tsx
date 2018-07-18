@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListWidgetListItem } from './ListWidgetListItem.js'
+import { ListWidgetListItem } from './ListWidgetListItem';
 
 type ListItem = {
     order: number;
@@ -7,6 +7,7 @@ type ListItem = {
 }
 export interface ListWidgetProps {
     listType: number;
+    data: string;
 }
 export interface ListWidgetState {
     items: Array<ListItem>;
@@ -18,11 +19,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
        super(props);
 
        this.state = {
-           items: [
-               { order: 0, label: "Pain" },
-               { order: 1, label: "Jambon" },
-               { order: 2, label: "Tomates" },
-            ],
+           items: [],
            text: ""
        }
 
@@ -56,26 +53,23 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
 
         let listItems:Array<ListItem> =[];
 
-        if (this.props.listType === 1) {
-            listItems = [
-                { order: 0, label: "Pain" },
-                { order: 1, label: "Jambon" },
-                { order: 2, label: "Tomates" }
-            ]
-        }
-        else if (this.props.listType === 2) {
-            listItems = [
-                { order: 0, label: "Minisizer" },
-                { order: 1, label: "Black Panther" },
-                { order: 2, label: "Maze runner" }
-            ]
-        }
+        //if (this.props.listType === 1) {
+        //    listItems = [
+        //        { order: 0, label: "Pain" },
+        //        { order: 1, label: "Jambon" },
+        //        { order: 2, label: "Tomates" }
+        //    ]
+        //}
+        //else if (this.props.listType === 2) {
+        //    listItems = [
+        //        { order: 0, label: "Minisizer" },
+        //        { order: 1, label: "Black Panther" },
+        //        { order: 2, label: "Maze runner" }
+        //    ]
+        //}
 
-        this.setState({
-            items: listItems
-        });
         return (
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="listWidgetForm">
                     <div className="listTyping">
                         <input type="text" className="inputAddListValue" value={this.state.text} placeholder="Ajoute un item" onChange={this.handleChange} />
                         <button><i className="fas fa-plus fa-m"></i></button>
