@@ -64,14 +64,8 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         return (
             <div className="App">
 
-                <Header userId={this.state.userId} />
+                {this.props.children}
 
-                <div id="container">
-                    {this.props.children}
-                </div>
-                
-
-                <Footer />
             </div>
         );
     }

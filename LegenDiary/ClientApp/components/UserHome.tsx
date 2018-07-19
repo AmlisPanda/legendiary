@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { Widget } from './Models';
+import { Header } from './Header';
 import { WidgetsList } from './WidgetsList';
 import { Nav } from './Nav';
 import { Popup } from './Popup';
@@ -16,6 +17,7 @@ interface UserHomeState {
     popupActive?: boolean;
     widgets: Widget[];
     popupContent?: React.ReactNode;
+    navDisplayed: boolean;
 }
 
 export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
@@ -24,7 +26,8 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         this.state = {
             userId: UserSession.getAuthenticatedUser() ? UserSession.getAuthenticatedUser().UserId : 0,
             popupActive: false,
-            widgets: []
+            widgets: [],
+            navDisplayed: false
         }
 
         this.getWidgets = this.getWidgets.bind(this);
@@ -34,6 +37,8 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         this.openPopup = this.openPopup.bind(this);
         this.createWidget = this.createWidget.bind(this);
         this.editWidget = this.editWidget.bind(this);
+        this.toggleNav = this.toggleNav.bind(this);
+        this.closeNav = this.closeNav.bind(this);
 
         this.getWidgets();
     }
@@ -93,9 +98,7 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
     closePopup(e) {
 
         this.getWidgets();
-        this.setState({popupActive:false});
-
-        
+        this.setState({popupActive:false}); 
     }
 
     openPopup(e) {
@@ -118,6 +121,15 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         });
     }
 
+    toggleNav(e) {
+
+        this.setState({ navDisplayed: !this.state.navDisplayed });
+    }
+
+    closeNav(e) {
+        this.setState({ navDisplayed: false });
+    }
+
     public render() {
 
         const popupComponent = this.state.popupActive ?
@@ -128,21 +140,27 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
 
         return (
             <div>
-                <WidgetsList
-                    isLoggedIn={true}
-                    widgets={this.state.widgets}
-                    userId={this.state.userId}
-                    deleteWidgetHandler={this.deleteWidget}
-                    editWidget={this.editWidget}
-                    editLayout={this.editLayout}
-                    closePopup={this.closePopup}
-                />
 
-                {popupComponent}
+                <Header userId={this.state.userId} toggleNav={this.toggleNav} />
 
-                <Nav handlerLogout={this.logout} createWidget={this.createWidget} closePopup={this.closePopup} />
+                <div id="container" className={this.state.navDisplayed ? "withNavBar" : ""} onClick={this.closeNav}>
+                    <WidgetsList
+                        isLoggedIn={true}
+                        widgets={this.state.widgets}
+                        userId={this.state.userId}
+                        deleteWidgetHandler={this.deleteWidget}
+                        editWidget={this.editWidget}
+                        editLayout={this.editLayout}
+                        closePopup={this.closePopup}
+                    />
+
+                    {popupComponent}
+
+                    
+                </div>
+
+                <Nav handlerLogout={this.logout} createWidget={this.createWidget} closePopup={this.closePopup} active={this.state.navDisplayed} toggleNav={this.toggleNav} />
             </div>
-            
 
         );
     }

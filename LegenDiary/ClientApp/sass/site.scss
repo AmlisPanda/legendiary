@@ -139,6 +139,9 @@ button {
 	position: relative;
     padding: 15px;
 }
+#container.withNavBar {
+    /*width: calc(100vw - #{$nav-width + 15});*/
+}
 
 #main {
 	width: 80%;
@@ -240,10 +243,11 @@ form {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
-    width: calc(100% - 200px);
+    width: calc(100% - $nav-width);
 }
 .react-grid-layout {
     overflow: hidden;
+    width: 100%;
 }
 .react-grid-item {
     background-color: #fff;
@@ -466,15 +470,16 @@ form {
 }
 
 #toolsNav {
-    width: 200px;
-    height: 100%;
+    height: calc(100% - #{$header-height});
     position: absolute;
     right: 0;
-    top: 0;
+    top: $header-height;
     font-size: 1.2em;
     flex-direction: column;
     background-color: #1A1A1A;
     padding: 0 15px;
+    box-sizing: border-box;
+    overflow: hidden;
 
     a {
         height: 50px;
@@ -483,6 +488,7 @@ form {
         text-decoration: none;
         margin-bottom: 30px;
         cursor: pointer;
+        white-space: nowrap;
 
         i {
             float: left;
@@ -500,19 +506,55 @@ form {
     }
 }
 
+#toolsNav.active {
+    opacity: 0.9;
+    display: block;
+    width: $nav-width;
+    animation: 0.5s ease navSlideIn;
+}
+#toolsNav.inactive {
+    width: 0;
+    padding: 0;
+    animation: 1s ease navSlideOut;
+}
+
 footer {
-	background-color: $dark-color;
-	color: white;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 25px;
-	text-align: center;
-	font-size: 0.8em;
-	line-height: 25px;
+    background-color: $dark-color;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 25px;
     display: none;
-	a {
-		color: white;
-		text-decoration: none;
-	}
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+@keyframes navSlideIn {
+    0% {
+        width: 0;
+        display: none;
+    }
+    100% {
+        width: $nav-width;
+        display: block;
+    }
+}
+@keyframes navSlideOut {
+    0% {
+        width: $nav-width;
+        display: block;
+    }
+
+    100% {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+    }
 }

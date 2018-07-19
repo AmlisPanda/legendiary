@@ -78,7 +78,8 @@ namespace LegenDiary.Models
                             WHERE WIDGET_ID = @WIDGET_ID";
                     else
                         cmd.CommandText = @"INSERT INTO [WIDGET] (WIDGET_DATE, [TITLE], [SUBTITLE], [WIDGET_DATA], [WIDGET_TYPE_ID], [APPUSER_ID], WIDTH, HEIGHT, X, Y) 
-                                        VALUES (@WIDGET_DATE, @TITLE, @SUBTITLE, @WIDGET_DATA, @WIDGET_TYPE_ID, @APPUSER_ID, 1, 1, (SELECT MAX(X) + 1 FROM [WIDGET]), (SELECT MAX(Y) + 1 FROM [WIDGET])) ";
+                                        VALUES (@WIDGET_DATE, @TITLE, @SUBTITLE, @WIDGET_DATA, @WIDGET_TYPE_ID, @APPUSER_ID, 1, 1, 
+                                        (SELECT ISNULL((SELECT MAX(X) + 1 FROM [WIDGET]), 0)), (SELECT ISNULL((SELECT MAX(Y) + 1 FROM [WIDGET]), 0))) ";
 
                     cmd.Parameters.Add("@TITLE", System.Data.SqlDbType.NVarChar).Value = this.Title;
                     cmd.Parameters.Add("@SUBTITLE", System.Data.SqlDbType.NVarChar).Value = this.Subtitle;
@@ -199,7 +200,8 @@ namespace LegenDiary.Models
 
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText = @"SELECT WIDGET_DATE, [TITLE], [SUBTITLE], [WIDGET_DATA], [WIDGET_TYPE_ID], [WIDGET_ID], WIDTH, HEIGHT, X, Y FROM WIDGET WHERE AppUser_Id = @userId";
+                    cmd.CommandText = @"SELECT WIDGET_DATE, [TITLE], [SUBTITLE], [WIDGET_DATA], [WIDGET_TYPE_ID], [WIDGET_ID], ISNULL(WIDTH, 1), ISNULL(HEIGHT, 1), ISNULL(X, 0), ISNULL(Y, 0) 
+                    FROM WIDGET WHERE AppUser_Id = @userId";
                     cmd.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
 
                     SqlDataReader reader = cmd.ExecuteReader();

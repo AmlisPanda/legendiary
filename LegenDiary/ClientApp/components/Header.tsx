@@ -6,6 +6,7 @@ import { MouseEventHandler, EventHandler, MouseEvent } from 'react';
 
 interface HeaderProps {
     userId: number;
+    toggleNav: (event: React.MouseEvent<HTMLElement>) => void;
 }
 interface HeaderState {
 }
@@ -14,8 +15,6 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
 
     constructor(props: HeaderProps) {
         super(props);
-
-        
     }
 
     render() {
@@ -27,7 +26,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
             userNav =
                 <div id="rightHeader">
                     <User />
-                    <i id="hamburgerIcon" className="fas fa-bars fa-lg"></i>
+                <i id="hamburgerIcon" className="fas fa-bars fa-lg" onClick={(e) => this.props.toggleNav(e)} ></i>
                 </div>
         }
 
