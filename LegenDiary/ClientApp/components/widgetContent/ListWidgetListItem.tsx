@@ -13,7 +13,7 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps>
         if (this.props.listType === 2) {
             for (var i = 0; i < 5; i++) {
                 notation.push(
-                    (<i className="far fa-star fa-s"></i>)
+                    (<i key={"note_" + i} className="far fa-star fa-s"></i>)
                 )
             }
         }

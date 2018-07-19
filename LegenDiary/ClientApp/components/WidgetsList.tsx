@@ -35,7 +35,6 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
     }
 
     openWidget(e, widget) {
-        console.log("WidgetsList");
         this.props.editWidget(e, widget);
     }
 

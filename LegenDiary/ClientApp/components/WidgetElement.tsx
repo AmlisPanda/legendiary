@@ -56,7 +56,6 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
     }
 
     editWidget(e) {
-        console.log("WidgetElement");
         this.props.openWidget(e, this.props.widget);
     }
 
@@ -67,7 +66,7 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
             case 1:
                 return <ImageWidget path={this.props.widget.WidgetData} />
             case 2:
-                return <ListWidget listType={1} data={this.props.widget.WidgetData} />
+                return <ListWidget data={this.props.widget.WidgetData} widgetId={this.props.widget.WidgetId} />
             default:
                 return <TextWidget html={"Contenu non géré pour l'instant"} />;
         }

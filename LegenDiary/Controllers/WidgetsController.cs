@@ -44,6 +44,13 @@ namespace LegenDiary.Controllers
         }
 
         [HttpPost]
+        [Route("SaveList")]
+        public Response SaveList([FromBody]Models.ListWidgets.ListWidgetData data)
+        {
+            return Widget.SaveList(_configuration, data);
+        }
+
+        [HttpPost]
         [Route("EditLayout")]
         public Response EditLayout([FromBody]GridLayout layout)
         {

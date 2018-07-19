@@ -3,6 +3,7 @@ import CKEditor from "react-ckeditor-component";
 import { FormField } from './FormField'
 import { TextWidgetForm } from './widgetContentForms/TextWidgetForm';
 import { ImageWidgetForm } from './widgetContentForms/ImageWidgetForm';
+import { ListWidgetData } from './Models';
 
 export interface WidgetContentFormProps {
     data: string;
@@ -21,6 +22,17 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
         this.state = {
             content: this.props.data
         }
+
+        this.listTypeChange = this.listTypeChange.bind(this);
+    }
+
+    listTypeChange(e) {
+        const data: ListWidgetData = {
+            WidgetId: 0,
+            ListType: Number(e.target.value),
+            Items: []
+        };
+        this.props.updateDataHandler(e, JSON.stringify(data));
     }
 
     render() {
@@ -34,7 +46,7 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
         }
         else if (contentType === 2) {
             content =
-                <FormField label="Type de liste" type="select">
+                <FormField label="Type de liste" type="select" changeHandler={this.listTypeChange}>
                     <option value="0">Liste simple</option>
                     <option value="1">Todo-list</option>
                     <option value="2">Liste avec notation</option>

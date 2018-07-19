@@ -18,6 +18,13 @@ body {
     padding-bottom: 40px;
     
 }
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style-type: none;
+}
 .App {
     min-height: 100vh;
 }
@@ -255,7 +262,7 @@ form {
     border-bottom-right-radius: 0;
 }
 .widget {
-    padding: 7px 15px 7px 30px;
+    padding: 7px 10px 7px 30px;
     overflow: hidden;
     height: 100%;
     position: relative;
@@ -291,15 +298,18 @@ form {
         width: calc(100% - 25px);
     }
 
-    
+
 
     h2 {
         font-size: 1.4em;
+        line-height: 20px;
         margin: 0;
         width: 90%;
         text-align: left;
         color: $main-color;
         font-weight: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .widgetFav {
@@ -337,6 +347,9 @@ form {
         background-size: cover;
         max-width: 100%;
         max-height: 90%;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
     }
 }
 
@@ -346,13 +359,20 @@ form {
 	text-align: left;
 
 	.listTyping {
-		display: flex;
+
+        position: relative;
+        margin-bottom: 5px;
 
 		input {
 			flex-grow: 4;
 			width: auto;
             font-size: 1em;
 		}
+        button {
+            position: absolute;
+            right: 0;
+            line-height: 23px;
+        }
 
 		button:hover {
 			color: $main-color;
@@ -386,6 +406,7 @@ form {
 		li:hover {
 			i {
 				display: inline-block;
+                line-height: 30px;
 			}
 
 
@@ -477,18 +498,16 @@ form {
     font-size: 1.2em;
     flex-direction: column;
     background-color: #1A1A1A;
-    padding: 0 15px;
-    box-sizing: border-box;
+    padding: 10px 15px;
     overflow: hidden;
 
     a {
-        height: 50px;
-        line-height: 50px;
         color: white;
         text-decoration: none;
         margin-bottom: 30px;
         cursor: pointer;
         white-space: nowrap;
+        outline: none;
 
         i {
             float: left;
@@ -501,21 +520,57 @@ form {
         }
     }
 
+
+    a.active {
+        color: $main-color;
+    }
+
     a:hover {
         color: $main-color;
+    }
+
+    > li {
+
+        > a {
+            height: 50px;
+            line-height: 50px;
+        }
+
+        ul.subMenu {
+            padding-left: 40px;
+            color: white;
+
+            li {
+                overflow: hidden;
+                max-height: 0;
+                /*@include transition(max-height 0.2s ease);*/
+            }
+        }
+
+    }
+
+    > li:hover {
+        ul.subMenu li {
+            max-height: 150px;
+            height: 30px;
+            text-transform: uppercase;
+            @include transition(max-height 1s ease);
+        }
     }
 }
 
 #toolsNav.active {
     opacity: 0.9;
-    display: block;
     width: $nav-width;
-    animation: 0.5s ease navSlideIn;
+    -webkit-transition: width 0.5s, padding 0.5s, opacity 0.5s;
+    transition: width 0.5s, padding 0.5s, opacity 0.5s;
 }
 #toolsNav.inactive {
     width: 0;
     padding: 0;
-    animation: 1s ease navSlideOut;
+    opacity: 0;
+    -webkit-transition: width 0.5s, padding 0.5s, opacity 0.5s;
+    transition: width 0.5s, padding 0.5s, opacity 0.5s;
 }
 
 footer {
@@ -535,26 +590,16 @@ footer {
         text-decoration: none;
     }
 }
-
-@keyframes navSlideIn {
+/* KEYFRAMES */
+@include keyframes(slide-up) {
     0% {
-        width: 0;
-        display: none;
-    }
-    100% {
-        width: $nav-width;
-        display: block;
-    }
-}
-@keyframes navSlideOut {
-    0% {
-        width: $nav-width;
-        display: block;
+        opacity: 1;
+        height: 100%;
     }
 
     100% {
-        width: 0;
+        max-height: 0;
         opacity: 0;
-        padding: 0;
+        height: 0;
     }
 }

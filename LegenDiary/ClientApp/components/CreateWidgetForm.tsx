@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Widget } from './Models';
+import { Widget, ListWidgetData } from './Models';
 import { FormField } from './FormField'
 import { WidgetContentForm } from './WidgetContentForm'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -35,16 +35,35 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
             widget: currentWidget
         }
         this.changeValue = this.changeValue.bind(this);
-        this.typeChange = this.typeChange.bind(this);
+        this.listTypeChange = this.listTypeChange.bind(this);
         this.createWidget = this.createWidget.bind(this);
         this.updateData = this.updateData.bind(this);
+        this.typeChange = this.typeChange.bind(this);
     }
 
 
+    listTypeChange(e) {
+        const data: ListWidgetData = {
+            WidgetId: 0,
+            ListType: e.target.value,
+            Items: []
+        };
+        this.updateData(e, JSON.stringify(data));
+    }
+
     typeChange(e) {
-        let w = { ...this.state.widget };
-        w.WidgetTypeId = Number(e.target.value);
-        this.setState({ widget: w });
+        const { widget } = this.state;
+        widget.WidgetTypeId = Number(e.target.value);
+        // Si liste, on crée un WidgetData par défaut
+        if (widget.WidgetTypeId == 2) {
+            const data: ListWidgetData = {
+                WidgetId: 0,
+                ListType: Number(e.target.value),
+                Items: []
+            };
+            widget.WidgetData = JSON.stringify(data);
+        }
+        this.setState({ widget });
     }
 
     changeValue(event) {

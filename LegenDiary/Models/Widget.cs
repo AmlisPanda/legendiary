@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -37,7 +38,6 @@ namespace LegenDiary.Models
 
 
         public Appuser Appuser { get; set; }
-        public WidgetType WidgetType { get; set; }
 
         /// <summary>
         /// Création du widget
@@ -55,9 +55,14 @@ namespace LegenDiary.Models
                 if (!UploadImage())
                     return new Response(false, "Image non créée");
             }
+            else if (this.WidgetTypeId == WidgetType.List.GetHashCode())
+            {
+                //ListWidgets.ListWidgetData data = JsonConvert.DeserializeObject<ListWidgets.ListWidgetData>(this.WidgetData);
+                
+            }
 
-            // Tailles par défaut
-            if (Width == 0)
+                // Tailles par défaut
+                if (Width == 0)
                 Width = 1;
             if (Height == 0)
                 Height = 1;
@@ -297,6 +302,56 @@ namespace LegenDiary.Models
                     cn.Close();
                 }
             }
+            return new Response(success, message);
+        }
+
+        /// <summary>
+        /// Enregistrement d'une liste
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static Response SaveList(IConfiguration config, ListWidgets.ListWidgetData data)
+        {
+            bool success = false;
+            string message = string.Empty;
+
+            using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
+            {
+                try
+                {
+                    cn.Open();
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = cn;
+
+                    cmd.CommandText = @"UPDATE [WIDGET] SET WIDGET_DATA = @WIDGET_DATA WHERE WIDGET_ID = @WIDGET_ID";
+
+                    cmd.Parameters.Add("@WIDGET_DATA", System.Data.SqlDbType.NVarChar).Value = JsonConvert.SerializeObject(data);
+                    cmd.Parameters.Add("@WIDGET_ID", System.Data.SqlDbType.Int).Value = data.WidgetId;
+
+                    if (cmd.ExecuteNonQuery() > 0)
+                    {
+                        success = true;
+                        message = "La liste a été mise à jour";
+                    }
+
+                    else
+                        message = "La liste n'a pas pas pu être sauvegardée, recommence plus tard";
+
+                }
+                catch (Exception e)
+                {
+                    // TODO : écrire des logs
+                    message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+
+
             return new Response(success, message);
         }
     }

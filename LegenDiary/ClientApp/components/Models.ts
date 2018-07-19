@@ -37,3 +37,17 @@ export class WidgetLayout {
     X: number;
     Y: number;
 }
+
+/* Widgets liste */
+
+export class ListWidgetItem {
+    Label: string;
+    Done?: boolean;
+    Order?: number;
+    Note?: number;
+}
+export class ListWidgetData {
+    WidgetId: number;
+    ListType: number;
+    Items: ListWidgetItem[];
+}
