@@ -382,12 +382,16 @@ form {
 
 	ul {
 		margin-left: 5px;
-		padding-left: 20px;
+		padding-left: 10px;
 		font-size: 1.2em;
 		li {
 			line-height: 30px;
 			cursor: pointer;
 
+            div {
+                line-height: 14px;
+                margin-top: 10px;
+            }
 			i.bullet {
 				float: left;
 			}
