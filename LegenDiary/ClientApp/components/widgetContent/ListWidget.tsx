@@ -39,6 +39,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.saveList = this.saveList.bind(this);
+        this.itemChange = this.itemChange.bind(this);
     }
 
     handleChange(e) {
@@ -47,6 +48,10 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         this.setState({
             text: e.target.value
         })
+    }
+
+    itemChange(item: ListWidgetItem) {
+        // TODO: Comment mettre à jour le bon item dans le json
     }
 
     handleSubmit(e) {
@@ -60,7 +65,6 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         };
 
         const items = this.state.items.concat(newItem);
-        console.log(items);
         this.saveList({
             ListType: this.state.listType,
             Items: items,
@@ -115,7 +119,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
                 </div>
                     <ul>
                     {this.state.items.map((item, index) => (
-                            <ListWidgetListItem key={index} label={item.Label} listType={this.state.listType} />
+                        <ListWidgetListItem key={index} data={item} listType={this.state.listType} itemChangeHandler={this.itemChange}  />
                         ))
                     }
                     </ul>

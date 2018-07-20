@@ -27,6 +27,7 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
     }
 
     listTypeChange(e) {
+        console.log(e.target);
         const data: ListWidgetData = {
             WidgetId: 0,
             ListType: Number(e.target.value),

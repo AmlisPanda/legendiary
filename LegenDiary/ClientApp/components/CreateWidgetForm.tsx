@@ -58,7 +58,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         if (widget.WidgetTypeId == 2) {
             const data: ListWidgetData = {
                 WidgetId: 0,
-                ListType: Number(e.target.value),
+                ListType: 0,
                 Items: []
             };
             widget.WidgetData = JSON.stringify(data);

@@ -355,80 +355,74 @@ form {
 
 
 .listWidgetForm {
+    text-align: left;
 
-	text-align: left;
-
-	.listTyping {
-
+    .listTyping {
         position: relative;
         margin-bottom: 5px;
 
-		input {
-			flex-grow: 4;
-			width: auto;
+        input {
+            flex-grow: 4;
+            width: auto;
             font-size: 1em;
-		}
+        }
+
         button {
             position: absolute;
             right: 0;
             line-height: 23px;
         }
 
-		button:hover {
-			color: $main-color;
-		}
-	}
+        button:hover {
+            color: $main-color;
+        }
+    }
 
 
-	ul {
-		margin-left: 5px;
-		padding-left: 10px;
-		font-size: 1.2em;
-		li {
-			line-height: 30px;
-			cursor: pointer;
+    ul {
+        margin-left: 5px;
+        padding-left: 10px;
+        font-size: 1.2em;
+
+        li {
+            line-height: 30px;
+            cursor: pointer;
 
             div {
-                line-height: 14px;
+                line-height: 16px;
                 margin-top: 10px;
             }
-			i.bullet {
-				float: left;
-			}
 
-			i.iconDelete {
-				display: none;
-				line-height: 25px;
-				float: right;
-			}
+            div.crossed {
+                text-decoration: line-through;
+            }
 
-			i:hover {
-				color: $main-color;
+            i.bullet {
+                float: left;
+            }
 
-			}
-		}
-		li:hover {
-			i {
-				display: inline-block;
-                line-height: 30px;
-			}
+            i.iconDelete {
+                display: none;
+                line-height: 16px;
+                float: right;
+            }
 
+            i:hover {
+                color: $main-color;
+            }
+        }
 
-		}
+        li:hover {
+            i {
+                display: inline-block;
+            }
+        }
 
-		li.strikethroughItem:hover {
-			color: $main-color;
-		}
+        li.crossAllowed:hover {
+            color: $main-color;
+        }
 
-		li {
-			div.strikethrough {
-				text-decoration: line-through;
-			}
-		}
-
-	}
-
-
+    }
 }
 
 .timerWidget {
