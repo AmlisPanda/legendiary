@@ -41,13 +41,13 @@ export class WidgetLayout {
 /* Widgets liste */
 
 export class ListWidgetItem {
+    WidgetId: number;
     Label: string;
     Done?: boolean;
     Order?: number;
     Note?: number;
 }
 export class ListWidgetData {
-    WidgetId: number;
+    //WidgetId: number;
     ListType: number;
-    Items: ListWidgetItem[];
 }

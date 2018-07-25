@@ -22,7 +22,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
             dataObj = JSON.parse(this.props.data);
             //dataObj.WidgetId = this.props.widgetId;
             this.state = {
-                items: dataObj.Items,
+                items: [],
                 text: "",
                 listType: dataObj.ListType
             }
@@ -38,8 +38,25 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.saveList = this.saveList.bind(this);
         this.itemChange = this.itemChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.getItems();
+    }
+
+    //componentDidUpdate(prevProps) {
+    //    this.getItems();
+    //}
+
+    getItems() {
+        fetch('api/Widgets/ListItems/' + this.props.widgetId).then(
+            response => response.json()
+        )
+        .then(data => {
+            console.log(data);
+            this.setState({ items: data.Items });
+        });
     }
 
     handleChange(e) {
@@ -51,13 +68,15 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
     }
 
     itemChange(item: ListWidgetItem) {
-        // TODO: Comment mettre à jour le bon item dans le json
+
+        this.saveItem(item, () => {});
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
         const newItem: ListWidgetItem = {
+            WidgetId: this.props.widgetId,
             Order: this.state.items.length,
             Label: this.state.text,
             Done: false,
@@ -65,29 +84,22 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         };
 
         const items = this.state.items.concat(newItem);
-        this.saveList({
-            ListType: this.state.listType,
-            Items: items,
-            WidgetId: this.props.widgetId
-        });
+        this.saveItem(newItem, () => { this.setState({ items: items, text: "" }) });
 
       
     }
 
-    saveList(dataObj: ListWidgetData) {
+    saveItem(item: ListWidgetItem, callback: () => void) {
 
-        fetch('api/Widgets/SaveList',
+        fetch('api/Widgets/ListItem',
             {
                 method: "post",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataObj)
+                body: JSON.stringify(item)
             })
             .then(function(response) { return response.json(); })
             .then((data) => {
-                this.setState((prevState) => ({
-                    items: dataObj.Items,
-                    text: ''
-                }));
+                callback();
             });
     }
 
@@ -96,20 +108,6 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
 
         let listItems: ListWidgetItem[] = [];
 
-        //if (this.props.listType === 1) {
-        //    listItems = [
-        //        { order: 0, label: "Pain" },
-        //        { order: 1, label: "Jambon" },
-        //        { order: 2, label: "Tomates" }
-        //    ]
-        //}
-        //else if (this.props.listType === 2) {
-        //    listItems = [
-        //        { order: 0, label: "Minisizer" },
-        //        { order: 1, label: "Black Panther" },
-        //        { order: 2, label: "Maze runner" }
-        //    ]
-        //}
 
         return (
                 <form onSubmit={this.handleSubmit} className="listWidgetForm">

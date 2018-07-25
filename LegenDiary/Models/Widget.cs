@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LegenDiary.Models.ListWidgets;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,6 @@ namespace LegenDiary.Models
             }
             else if (this.WidgetTypeId == WidgetType.List.GetHashCode())
             {
-                //ListWidgets.ListWidgetData data = JsonConvert.DeserializeObject<ListWidgets.ListWidgetData>(this.WidgetData);
                 
             }
 
@@ -123,6 +123,10 @@ namespace LegenDiary.Models
             return new Response(success, message);
         }
 
+        /// <summary>
+        /// Sauvegarde de l'image physique
+        /// </summary>
+        /// <returns></returns>
         private bool UploadImage()
         {
             bool uploadOK = false;
@@ -253,15 +257,15 @@ namespace LegenDiary.Models
         /// <param name="config"></param>
         /// <param name="layout"></param>
         /// <returns></returns>
-        public static Response SaveLayout(IConfiguration config, GridLayout layout)
+        public static Response SaveLayout(IConfiguration config, WidgetPosition[] positions)
         {
             bool success = false;
             string message = string.Empty;
             SqlCommand cmd;
-            WidgetPosition[] positions = layout.Positions;
+            //WidgetPosition[] positions = layout.Positions;
             WidgetPosition position;
 
-            if (layout == null || positions.Length == 0)
+            if (positions == null || positions.Length == 0)
             {
                 message = "Aucun layout à modifier";
                 return new Response(success, message);
@@ -304,17 +308,20 @@ namespace LegenDiary.Models
             }
             return new Response(success, message);
         }
-
+        
         /// <summary>
-        /// Enregistrement d'une liste
+        /// Récupération des items d'un widget de type liste
         /// </summary>
         /// <param name="config"></param>
-        /// <param name="data"></param>
+        /// <param name="widgetId"></param>
         /// <returns></returns>
-        public static Response SaveList(IConfiguration config, ListWidgets.ListWidgetData data)
+        public static ListItemsResponse GetListWidgetItems(IConfiguration config, int widgetId)
         {
             bool success = false;
             string message = string.Empty;
+
+            List<ListItem> itemsList = new List<ListItem>();
+            ListItem item;
 
             using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
             {
@@ -324,35 +331,40 @@ namespace LegenDiary.Models
 
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = cn;
+                    cmd.CommandText = @"SELECT LISTITEM_ID, LABEL, ITEM_ORDER, NOTE, DONE FROM [LISTITEM] WHERE WIDGET_ID = @wid";
+                    cmd.Parameters.Add("@wid", System.Data.SqlDbType.Int).Value = widgetId;
 
-                    cmd.CommandText = @"UPDATE [WIDGET] SET WIDGET_DATA = @WIDGET_DATA WHERE WIDGET_ID = @WIDGET_ID";
-
-                    cmd.Parameters.Add("@WIDGET_DATA", System.Data.SqlDbType.NVarChar).Value = JsonConvert.SerializeObject(data);
-                    cmd.Parameters.Add("@WIDGET_ID", System.Data.SqlDbType.Int).Value = data.WidgetId;
-
-                    if (cmd.ExecuteNonQuery() > 0)
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        success = true;
-                        message = "La liste a été mise à jour";
+                        //int wid = reader.GetInt32(5);
+                        item = new ListItem()
+                        {
+                            ListItemId = reader.GetInt32(0),
+                            Label = reader.GetString(1),
+                            Order = reader.GetInt32(2),
+                            Note = reader.GetByte(3),
+                            Done = reader.GetBoolean(4)
+
+                        };
+                        itemsList.Add(item);
                     }
 
-                    else
-                        message = "La liste n'a pas pas pu être sauvegardée, recommence plus tard";
+                    success = true;
 
                 }
                 catch (Exception e)
                 {
                     // TODO : écrire des logs
-                    message = "Une erreur est survenue lors de l'enregistrement, ré-essaie plus tard.";
+                    //message = "Une erreur est survenue lors de la récupération des widgets, ré-essaie plus tard.";
+                    message = String.Concat(e.Message, Environment.NewLine, e.StackTrace);
                 }
                 finally
                 {
                     cn.Close();
                 }
             }
-
-
-            return new Response(success, message);
+            return new ListItemsResponse(success, message) { Items = itemsList };
         }
     }
 }

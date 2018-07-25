@@ -35,27 +35,49 @@ CONSTRAINT [PK_WIDGET] PRIMARY KEY ([WIDGET_ID])
 )
 GO
 
+CREATE TABLE [dbo].[LISTITEM](
+	[LISTITEM_ID] INT IDENTITY(1,1) NOT NULL,
+	[WIDGET_ID] INT NOT NULL,
+	[LABEL] NVARCHAR(500),
+	[ITEM_ORDER] INT,
+	[NOTE] TINYINT,
+	[DONE] BIT,
+	
+ CONSTRAINT [PK_LISTITEM] PRIMARY KEY ([LISTITEM_ID])
+)
+GO
+
+/*
 CREATE TABLE [WIDGET_TYPE] (
   [WIDGET_TYPE_ID]       INT NOT NULL IDENTITY(1,1),
   [LABEL]                NVARCHAR(150) NOT NULL,
 CONSTRAINT [PK_WIDGET_TYPE] PRIMARY KEY ([WIDGET_TYPE_ID])
 )
-GO
+GO*/
 
 /*============================================================================*/
 /*                               FOREIGN KEYS                                 */
 /*============================================================================*/
+/*
 ALTER TABLE [WIDGET]
     ADD CONSTRAINT [FK_WIDGET_WIDGET_TYPE]
         FOREIGN KEY ([WIDGET_TYPE_ID])
             REFERENCES [WIDGET_TYPE] ([WIDGET_TYPE_ID])
  GO
-
+*/
 ALTER TABLE [WIDGET]
     ADD CONSTRAINT [FK_WIDGET_APPUSER]
         FOREIGN KEY ([APPUSER_ID])
             REFERENCES [APPUSER] ([APPUSER_ID])
 ON DELETE CASCADE
  GO
+ 
+ ALTER TABLE [LISTITEM]
+    ADD CONSTRAINT [FK_LISTITEM_WIDGET]
+        FOREIGN KEY ([WIDGET_ID])
+            REFERENCES [WIDGET] ([WIDGET_ID])
+ON DELETE CASCADE
+ GO
+
 
 

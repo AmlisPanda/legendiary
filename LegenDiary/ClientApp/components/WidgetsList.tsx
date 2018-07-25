@@ -15,16 +15,14 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 interface WidgetsListProps {
     isLoggedIn: boolean;
-    widgets: Widget[];
     userId: number;
-    deleteWidgetHandler: (id: number) => void;
     editWidget: (ev: React.MouseEvent<HTMLButtonElement>, widget: Widget) => void;
-    editLayout: (layout, layouts) => void;
     closePopup: (ev: React.MouseEvent<HTMLButtonElement>) => void;
+    refresh: boolean;
 }
 
 interface WidgetsListState {
-    
+    widgets: Widget[];
 }
 
 export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListState> {
@@ -32,26 +30,98 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
     constructor(props) {
         super(props);
         this.openWidget = this.openWidget.bind(this);
+        this.getWidgets = this.getWidgets.bind(this);
+        this.deleteWidget = this.deleteWidget.bind(this);
+        this.closeWidgetPopup = this.closeWidgetPopup.bind(this);
+
+        this.state = {
+            widgets: []
+        }
+    }
+
+    componentDidMount() {
+        this.getWidgets();
+    }
+
+    componentWillReceiveProps(props) {
+        const { refresh } = this.props;
+        if (props.refresh == true) {
+            this.getWidgets();
+        }
     }
 
     openWidget(e, widget) {
         this.props.editWidget(e, widget);
     }
 
+    // Suppression d'un widget
+    deleteWidget(widgetId) {
+        fetch('api/Widgets/' + widgetId, {
+            method: 'delete'
+        }).then(
+            response => response.json()
+            )
+            .then(data => {
+                if (data.Success) {
+                    this.getWidgets();
+                }
+                else {
+                    alert(data.Message);
+                }
+            });
+    }
+
+
+    // Modification du layout
+    editLayout(callbackItem) {
+        if (callbackItem) {
+            fetch('api/Widgets/EditLayout', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(callbackItem)
+            }).then(
+                response => response.json()
+                );
+        }
+
+    }
+
+    // Récupère la liste des widgets depuis le serveur
+    getWidgets() {
+        fetch('api/Widgets/User/' + this.props.userId).then(
+            response => response.json()
+        )
+            .then(data => {
+
+                this.setState({ widgets: data.WidgetsList });
+            });
+    }
+
+    closeWidgetPopup(e) {
+        this.getWidgets();
+        this.props.closePopup(e);
+    }
 
     render() {
 
         const cols = { lg: 8, md: 6, sm: 4, xs: 2, xxs: 1 };
+
+
+
+
         return (
-            <ResponsiveGridLayout key="widgetsList" className="layout" margin={[20, 20]} cols={cols} onLayoutChange={this.props.editLayout} draggableHandle={".grip, .widgetHeader"}>
-                {this.props.widgets.map(widget =>
+            <ResponsiveGridLayout key="widgetsList" className="layout" onDragStop={this.editLayout} onResizeStop={this.editLayout} margin={[20, 20]} cols={cols} draggableHandle={".grip, .widgetHeader"}>
+                {this.state.widgets.map(widget =>
                     <div key={"widget_" + widget.WidgetId} data-grid={{ x: widget.X, y: widget.Y, w: widget.Width, h: widget.Height, isResizable: true }}>
                         <WidgetElement
                             widget={widget}
                             isLoggedIn={true}
-                            deleteWidgetHandler={this.props.deleteWidgetHandler}
+                            deleteWidgetHandler={() => this.deleteWidget(widget.WidgetId)}
                             openWidget={this.openWidget}
-                            closePopup={this.props.closePopup}
+                            closePopup={this.closeWidgetPopup}
                         />
                     </div>
                 )}

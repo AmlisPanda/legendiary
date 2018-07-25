@@ -36,7 +36,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         }
         this.changeValue = this.changeValue.bind(this);
         this.listTypeChange = this.listTypeChange.bind(this);
-        this.createWidget = this.createWidget.bind(this);
+        this.saveWidget = this.saveWidget.bind(this);
         this.updateData = this.updateData.bind(this);
         this.typeChange = this.typeChange.bind(this);
     }
@@ -44,9 +44,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
 
     listTypeChange(e) {
         const data: ListWidgetData = {
-            WidgetId: 0,
-            ListType: e.target.value,
-            Items: []
+            ListType: e.target.value
         };
         this.updateData(e, JSON.stringify(data));
     }
@@ -57,9 +55,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         // Si liste, on crée un WidgetData par défaut
         if (widget.WidgetTypeId == 2) {
             const data: ListWidgetData = {
-                WidgetId: 0,
-                ListType: 0,
-                Items: []
+                ListType: 0
             };
             widget.WidgetData = JSON.stringify(data);
         }
@@ -74,12 +70,13 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
 
     // Mise à jour de la data dans state
     updateData(event, data) {
+        
         const { widget } = this.state;
         widget.WidgetData = data;
         this.setState({ widget });
     }
 
-    createWidget(event) {
+    saveWidget(event) {
 
         fetch('api/Widgets/Save',
             {
@@ -103,7 +100,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
         return (
 
             <ValidatorForm id="widgetForm" ref="form"
-                onSubmit={this.createWidget}>
+                onSubmit={this.saveWidget}>
 
                 <h2>{title}</h2>
 
@@ -118,12 +115,15 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                 />
 
                 <section>
-                    <FormField label="Type de widget" type="select" value={this.state.widget.WidgetTypeId.toString()} changeHandler={this.typeChange}>
-                        <option value="0">Texte</option>
-                        <option value="1">Image</option>
-                        <option value="2">Liste</option>
-                        <option value="3">Mood tracker</option>
-                    </FormField>
+                    {   this.state.widget.WidgetId == 0 &&
+                        <FormField label="Type de widget" type="select" value={this.state.widget.WidgetTypeId.toString()} changeHandler={this.typeChange}>
+                            <option value="0">Texte</option>
+                            <option value="1">Image</option>
+                            <option value="2">Liste</option>
+                            <option value="3">Mood tracker</option>
+                        </FormField>
+                    }
+                
                     <FormField label="Date" type="datepicker"></FormField>
                     <FormField label="Confidentialité" type="select">
                         <option value="0">Seulement moi</option>
@@ -131,7 +131,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                     </FormField>
                 </section>
 
-                <WidgetContentForm data={this.state.widget.WidgetData} contentType={this.state.widget.WidgetTypeId} updateDataHandler={this.updateData} />
+                <WidgetContentForm widget={this.state.widget} updateDataHandler={this.updateData} />
 
                 <button className="buttonForm">Sauvegarder</button>
             </ValidatorForm>

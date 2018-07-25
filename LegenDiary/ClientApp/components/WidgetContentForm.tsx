@@ -3,16 +3,16 @@ import CKEditor from "react-ckeditor-component";
 import { FormField } from './FormField'
 import { TextWidgetForm } from './widgetContentForms/TextWidgetForm';
 import { ImageWidgetForm } from './widgetContentForms/ImageWidgetForm';
-import { ListWidgetData } from './Models';
+import { ListWidgetData, Widget } from './Models';
 
 export interface WidgetContentFormProps {
-    data: string;
-    contentType: number;
+    widget: Widget;
     updateDataHandler: (ev: React.MouseEvent<HTMLElement>, data: string) => void;
 }
 
 export interface WidgetContentFormState {
     content: string;
+    listType: string;
 }
 
 export class WidgetContentForm extends React.Component<WidgetContentFormProps, WidgetContentFormState> {
@@ -20,24 +20,31 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
     constructor(props) {
         super(props);
         this.state = {
-            content: this.props.data
+            content: this.props.widget.WidgetData,
+            listType: "0"
+        }
+
+        if (props.contentType === 2) {
+            const data = JSON.parse(this.state.content);
+            this.setState({ listType: data.ListType });
         }
 
         this.listTypeChange = this.listTypeChange.bind(this);
     }
 
     listTypeChange(e) {
-        console.log(e.target);
         const data: ListWidgetData = {
-            WidgetId: 0,
             ListType: Number(e.target.value),
-            Items: []
         };
+        
         this.props.updateDataHandler(e, JSON.stringify(data));
+
+        this.setState({ listType: data.ListType.toString() });
     }
 
     render() {
-        const contentType = this.props.contentType;
+        const contentType = this.props.widget.WidgetTypeId;
+
         let content = null;
         if (contentType === 0) {
             content = <TextWidgetForm data={this.state.content} updateDataHandler={this.props.updateDataHandler} />
@@ -45,9 +52,9 @@ export class WidgetContentForm extends React.Component<WidgetContentFormProps, W
         else if (contentType === 1) {
             content = <ImageWidgetForm data={this.state.content} updateDataHandler={this.props.updateDataHandler} />
         }
-        else if (contentType === 2) {
+        else if (contentType === 2 && this.props.widget.WidgetId == 0) {
             content =
-                <FormField label="Type de liste" type="select" changeHandler={this.listTypeChange}>
+                <FormField label="Type de liste" type="select" changeHandler={this.listTypeChange} value={this.state.listType}>
                     <option value="0">Liste simple</option>
                     <option value="1">Todo-list</option>
                     <option value="2">Liste avec notation</option>

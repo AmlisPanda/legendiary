@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 namespace LegenDiary.Models.ListWidgets
 {
     [DataContract]
-    public class ListWidgetData
+    public class ListData
     {
-        [DataMember]
-        public int WidgetId { get; set; }
+        //[DataMember]
+        //public int WidgetId { get; set; }
         [DataMember]
         public int ListType { get; set; }
-        [DataMember]
-        public List<ListWidgetItem> Items { get; set; }
     }
 }

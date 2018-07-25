@@ -44,17 +44,24 @@ namespace LegenDiary.Controllers
         }
 
         [HttpPost]
-        [Route("SaveList")]
-        public Response SaveList([FromBody]Models.ListWidgets.ListWidgetData data)
+        [Route("ListItem")]
+        public Response SaveListItem([FromBody]Models.ListWidgets.ListItem item)
         {
-            return Widget.SaveList(_configuration, data);
+            return item.Save(_configuration);
+        }
+
+        [HttpGet]
+        [Route("ListItems/{id}")]
+        public Response GetListItems(int id)
+        {
+            return Widget.GetListWidgetItems(_configuration, id);
         }
 
         [HttpPost]
         [Route("EditLayout")]
-        public Response EditLayout([FromBody]GridLayout layout)
+        public Response EditLayout([FromBody]WidgetPosition[] positions)
         {
-            return Widget.SaveLayout(_configuration, layout);
+            return Widget.SaveLayout(_configuration, positions);
         }
 
         // PUT: api/Widgets/5
