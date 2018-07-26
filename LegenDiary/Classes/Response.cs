@@ -1,5 +1,6 @@
 ﻿using LegenDiary.Models;
 using LegenDiary.Models.ListWidgets;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace LegenDiary
 {
     [DataContract]
-    public class Response
+    public class Response 
     {
         [DataMember]
         public bool Success { get; set; }

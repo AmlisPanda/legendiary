@@ -368,7 +368,6 @@ form {
 
         input {
             flex-grow: 4;
-            width: auto;
             font-size: 1em;
         }
 
@@ -389,44 +388,55 @@ form {
         padding-left: 10px;
         font-size: 1.2em;
 
-        li {
+        li.listItem {
             line-height: 30px;
             cursor: pointer;
+            overflow: hidden;
 
             div {
                 line-height: 16px;
                 margin-top: 10px;
+                overflow: hidden;
+
+                span {
+                    float: left;
+                }
+
+                i.iconStar {
+                    float: left;
+                }
+
+                i.bullet {
+                    float: left;
+                }
+
+                i.iconDelete {
+                    margin-left: 5px;
+                    color: $red;
+                    display: none;
+                    line-height: 16px;
+                }
+
+                i:hover {
+                    color: $main-color;
+                }
             }
 
             div.crossed {
                 text-decoration: line-through;
             }
-
-            i.bullet {
-                float: left;
-            }
-
-            i.iconDelete {
-                display: none;
-                line-height: 16px;
-                float: right;
-            }
-
-            i:hover {
-                color: $main-color;
-            }
         }
 
-        li:hover {
-            i {
+        li.listItem:hover {
+            div i {
                 display: inline-block;
+                float: left;
             }
         }
 
         li.crossAllowed:hover {
             color: $main-color;
         }
-
     }
 }
 

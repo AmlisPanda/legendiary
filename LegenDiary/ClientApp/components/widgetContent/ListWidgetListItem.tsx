@@ -5,6 +5,7 @@ export interface ListWidgetListItemProps {
     listType: number;
     data: ListWidgetItem;
     itemChangeHandler: (data: ListWidgetItem) => void;
+    itemDeleteHandler: (itemId: number) => void;
 }
 
 interface ListWidgetListItemState {
@@ -28,6 +29,8 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps,
         this.setState({ note: this.props.data.Note });
     }
 
+   
+
     render() {
 
         let notation = [];
@@ -45,16 +48,18 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps,
                     starStyle = "far";
 
                 notation.push(
-                    (<i key={"note_" + i} className={starStyle + " fa-star fa-s"} onClick={this.noteChange.bind(this, i)}></i>)
+                    (<i key={"note_" + i} className={starStyle + " fa-star fa-s iconStar"} onClick={this.noteChange.bind(this, i)}></i>)
                 )
             }
         }
 
+        const className = "listItem " + (this.props.listType == 1 ? "crossAllowed" : "");
+
         return (
-            <li className={this.props.listType == 1 ? "crossAllowed" : ""}>
-                <div >
-                    {this.props.data.Label}
-                    <i className="iconDelete fas fa-trash fa-xs"></i>
+            <li className={className}>
+                <div>
+                    <span>{this.props.data.Label}</span>
+                    <i className="iconDelete fas fa-trash fa-xs" onClick={() => this.props.itemDeleteHandler(this.props.data.ListItemId)}></i>
                 </div>
                 {notation}
             </li>

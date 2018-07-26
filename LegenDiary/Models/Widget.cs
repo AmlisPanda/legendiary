@@ -237,11 +237,6 @@ namespace LegenDiary.Models
                     success = true;
 
                 }
-                catch (Exception e)
-                {
-                    // TODO : écrire des logs
-                    message = "Une erreur est survenue lors de la récupération des widgets, ré-essaie plus tard.";
-                }
                 finally
                 {
                     cn.Close();

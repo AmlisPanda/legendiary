@@ -39,6 +39,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.itemChange = this.itemChange.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     componentDidMount() {
@@ -50,11 +51,10 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
     //}
 
     getItems() {
-        fetch('api/Widgets/ListItems/' + this.props.widgetId).then(
+        fetch('api/ListItems/' + this.props.widgetId).then(
             response => response.json()
         )
         .then(data => {
-            console.log(data);
             this.setState({ items: data.Items });
         });
     }
@@ -76,6 +76,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
         e.preventDefault();
 
         const newItem: ListWidgetItem = {
+            ListItemId: 0,
             WidgetId: this.props.widgetId,
             Order: this.state.items.length,
             Label: this.state.text,
@@ -83,15 +84,19 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
             Note: 0
         };
 
-        const items = this.state.items.concat(newItem);
-        this.saveItem(newItem, () => { this.setState({ items: items, text: "" }) });
+        this.saveItem(newItem, (data) => {
+            newItem.ListItemId = data.ListItemId;
+            const items = this.state.items.concat(newItem);
+            this.setState({ items: items, text: "" });
+
+        });
 
       
     }
 
-    saveItem(item: ListWidgetItem, callback: () => void) {
+    saveItem(item: ListWidgetItem, callback: (data) => void) {
 
-        fetch('api/Widgets/ListItem',
+        fetch('api/ListItems',
             {
                 method: "post",
                 headers: { 'Content-Type': 'application/json' },
@@ -99,7 +104,23 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
             })
             .then(function(response) { return response.json(); })
             .then((data) => {
-                callback();
+                callback(data);
+            });
+    }
+
+    deleteItem(index) {
+        fetch('api/ListItems/' + index, {
+            method: 'delete'
+        }).then(
+            response => response.json()
+            )
+            .then(data => {
+                if (data.Success) {
+                    this.getItems();
+                }
+                else {
+                    alert("Item non supprimé");
+                }
             });
     }
 
@@ -117,7 +138,7 @@ export class ListWidget extends React.Component<ListWidgetProps, ListWidgetState
                 </div>
                     <ul>
                     {this.state.items.map((item, index) => (
-                        <ListWidgetListItem key={index} data={item} listType={this.state.listType} itemChangeHandler={this.itemChange}  />
+                        <ListWidgetListItem key={index} data={item} listType={this.state.listType} itemChangeHandler={this.itemChange} itemDeleteHandler={this.deleteItem} />
                         ))
                     }
                     </ul>

@@ -41,6 +41,7 @@ export class WidgetLayout {
 /* Widgets liste */
 
 export class ListWidgetItem {
+    ListItemId: number;
     WidgetId: number;
     Label: string;
     Done?: boolean;

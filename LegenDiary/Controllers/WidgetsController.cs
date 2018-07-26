@@ -6,6 +6,7 @@ using LegenDiary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace LegenDiary.Controllers
 {
@@ -14,10 +15,12 @@ namespace LegenDiary.Controllers
     public class WidgetsController : Controller
     {
         private IConfiguration _configuration;
+        private readonly ILogger _logger;
 
-        public WidgetsController(IConfiguration Configuration)
+        public WidgetsController(IConfiguration Configuration, ILogger<WidgetsController> logger)
         {
             _configuration = Configuration;
+            _logger = logger;
         }
 
         // GET: api/Widgets
@@ -25,7 +28,17 @@ namespace LegenDiary.Controllers
         [Route("User/{id}")]
         public WidgetsResponse GetUserWidgets(int id)
         {
-            return Widget.GetUserWidgets(_configuration, id);
+            WidgetsResponse res = new WidgetsResponse(false);
+            try
+            {
+                res = Widget.GetUserWidgets(_configuration, id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Failed getting widgets of user {id}");
+            }
+            
+            return res;
         }
 
         // GET: api/Widgets/5
@@ -41,13 +54,6 @@ namespace LegenDiary.Controllers
         public Response Post([FromBody]Widget w)
         {
             return w.Save(_configuration);
-        }
-
-        [HttpPost]
-        [Route("ListItem")]
-        public Response SaveListItem([FromBody]Models.ListWidgets.ListItem item)
-        {
-            return item.Save(_configuration);
         }
 
         [HttpGet]

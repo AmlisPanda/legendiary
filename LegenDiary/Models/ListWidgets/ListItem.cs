@@ -24,7 +24,11 @@ namespace LegenDiary.Models.ListWidgets
         [DataMember]
         public byte Note { get; set; }
 
-
+        /// <summary>
+        /// Sauvegarde un item de liste
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
         public ListItemResponse Save(IConfiguration config)
         {
             bool success = false;
@@ -83,6 +87,39 @@ namespace LegenDiary.Models.ListWidgets
             return new ListItemResponse(success, message) { ListItemId = id };
         }
 
+        /// <summary>
+        /// Supprime un LISTITEM
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Response Delete(IConfiguration config, int id)
+        {
+            bool success = false;
+            string message = string.Empty;
 
+            using (SqlConnection cn = new SqlConnection(config.GetConnectionString("AppDbContext")))
+            {
+                try
+                {
+                    cn.Open();
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText = @"DELETE FROM LISTITEM WHERE LISTITEM_ID = @id";
+                    cmd.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+
+                    int result = cmd.ExecuteNonQuery();
+
+                    success = true;
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            return new Response(success, message);
+        }
     }
 }
