@@ -10,6 +10,7 @@ export interface ListWidgetListItemProps {
 
 interface ListWidgetListItemState {
     note: number;
+    done: boolean;
 }
 
 export class ListWidgetListItem extends React.Component<ListWidgetListItemProps, ListWidgetListItemState> {
@@ -19,7 +20,8 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps,
         super(props);
 
         this.state = {
-            note : this.props.data.Note
+            note: this.props.data.Note,
+            done: this.props.data.Done
         }
     }
 
@@ -29,7 +31,11 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps,
         this.setState({ note: this.props.data.Note });
     }
 
-   
+    crossItem() {
+        this.props.data.Done = !this.state.done;
+        this.props.itemChangeHandler(this.props.data);
+        this.setState((prevState) => { return { done: !prevState.done } });
+    }
 
     render() {
 
@@ -53,12 +59,15 @@ export class ListWidgetListItem extends React.Component<ListWidgetListItemProps,
             }
         }
 
-        const className = "listItem " + (this.props.listType == 1 ? "crossAllowed" : "");
+        let labelElt = <span >{this.props.data.Label}</span>;
+
+        if (this.props.listType == 1)
+            labelElt = <span className={"crossAllowed " + (this.state.done ? "crossed" : "")} onClick={this.crossItem.bind(this)}>{this.props.data.Label}</span>;
 
         return (
-            <li className={className}>
+            <li className="listItem">
                 <div>
-                    <span>{this.props.data.Label}</span>
+                    {labelElt}
                     <i className="iconDelete fas fa-trash fa-xs" onClick={() => this.props.itemDeleteHandler(this.props.data.ListItemId)}></i>
                 </div>
                 {notation}

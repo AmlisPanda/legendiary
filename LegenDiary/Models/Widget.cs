@@ -193,7 +193,7 @@ namespace LegenDiary.Models
         /// <param name="config"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static WidgetsResponse GetUserWidgets(IConfiguration config, int userId)
+        public static WidgetsResponse GetUserWidgets(IConfiguration config, int userId, string date)
         {
             bool success = false;
             string message = string.Empty;
@@ -210,8 +210,9 @@ namespace LegenDiary.Models
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = cn;
                     cmd.CommandText = @"SELECT WIDGET_DATE, [TITLE], [SUBTITLE], [WIDGET_DATA], [WIDGET_TYPE_ID], [WIDGET_ID], ISNULL(WIDTH, 1), ISNULL(HEIGHT, 1), ISNULL(X, 0), ISNULL(Y, 0) 
-                    FROM WIDGET WHERE AppUser_Id = @userId";
+                    FROM WIDGET WHERE AppUser_Id = @userId AND CAST(WIDGET_DATE AS DATE) = @date";
                     cmd.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
+                    cmd.Parameters.Add(new SqlParameter("@date", date));
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -236,7 +237,7 @@ namespace LegenDiary.Models
 
                     success = true;
 
-                }
+              }
                 finally
                 {
                     cn.Close();

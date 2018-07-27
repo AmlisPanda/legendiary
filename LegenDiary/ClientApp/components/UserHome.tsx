@@ -1,13 +1,17 @@
 ﻿import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+
 import { Widget } from './Models';
 import { Header } from './Header';
 import { WidgetsList } from './WidgetsList';
 import { Nav } from './Nav';
 import { Popup } from './Popup';
 import { UserSession } from './UserSession';
-import { RouteComponentProps } from 'react-router';
+import { DateSelector } from './DateSelector';
 import { CreateWidgetForm } from './CreateWidgetForm';
 import { ReactNode } from 'react';
+import * as moment from 'moment';
+import DatePicker from 'react-datepicker';
 
 
 export interface UserHomeProps extends RouteComponentProps<{}> {
@@ -18,6 +22,8 @@ interface UserHomeState {
     popupContent?: React.ReactNode;
     navDisplayed: boolean;
     refreshWidgets: boolean;
+    date: Date;
+    calendarOpen: boolean;
 }
 
 export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
@@ -27,7 +33,9 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
             userId: UserSession.getAuthenticatedUser() ? UserSession.getAuthenticatedUser().UserId : 0,
             popupActive: false,
             navDisplayed: false,
-            refreshWidgets: false
+            refreshWidgets: false,
+            date: new Date(),
+            calendarOpen: false
         }
 
         this.logout = this.logout.bind(this);
@@ -37,9 +45,9 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         this.editWidget = this.editWidget.bind(this);
         this.toggleNav = this.toggleNav.bind(this);
         this.closeNav = this.closeNav.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.toggleCalendar = this.toggleCalendar.bind(this);
     }
-
-
 
 
     logout() {
@@ -83,6 +91,22 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
         this.setState({ navDisplayed: false });
     }
 
+    toggleCalendar() {
+        if (this.state.calendarOpen) {
+            this.setState({ calendarOpen: false, refreshWidgets: false })
+        }
+        else {
+            this.setState({ calendarOpen: true, refreshWidgets: false })
+        }
+        
+    }
+
+    handleChange(date) {
+        this.toggleCalendar();
+        this.setState({ date: date, refreshWidgets: true })
+        
+    }
+
     public render() {
 
         const popupComponent = this.state.popupActive ?
@@ -97,7 +121,25 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
                 <Header userId={this.state.userId} toggleNav={this.toggleNav} />
 
                 <div id="container" className={this.state.navDisplayed ? "withNavBar" : ""} onClick={this.closeNav}>
+
+                    <div id="dateSelectorContainer">
+                        <button id="dateSelector" onClick={this.toggleCalendar}>
+                            {moment(this.state.date).locale("fr").format("LL")}
+                        </button>
+                        {
+                            this.state.calendarOpen && (
+                                <DatePicker
+                                    locale="fr"
+                                    selected={moment(this.state.date)}
+                                    onChange={this.handleChange}
+                                    withPortal
+                                    inline />
+                            )
+                        }
+                    </div>
+
                     <WidgetsList
+                        date={this.state.date}
                         refresh={this.state.refreshWidgets}
                         isLoggedIn={true}
                         userId={this.state.userId}

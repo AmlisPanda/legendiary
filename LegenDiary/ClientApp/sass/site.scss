@@ -74,7 +74,22 @@ button {
     margin: 0;
 }
 
+#dateSelectorContainer {
+    text-align: center;
 
+    #dateSelector {
+        background-color: transparent;
+        color: white;
+        text-align: center;
+        padding: 10px 0 0;
+        font-size: 2em;
+        outline: none;
+
+        &:hover {
+            color: $main-color;
+        }
+    }
+}
 
 #nav {
 	position: relative;
@@ -340,7 +355,7 @@ form {
         height: calc(100% - 50px);
 
         p {
-            margin: 0;
+            margin: 0 0 8px 0;
             padding: 0;
         }
     }
@@ -394,7 +409,7 @@ form {
             overflow: hidden;
 
             div {
-                line-height: 16px;
+                line-height: 18px;
                 margin-top: 10px;
                 overflow: hidden;
 
@@ -402,9 +417,18 @@ form {
                     float: left;
                 }
 
-                i.iconStar {
-                    float: left;
+                span.crossAllowed:hover {
+                    color: $main-color;
                 }
+
+                span.crossed {
+                    color: #E0E0E0;
+                    text-decoration: line-through;
+                    @include transition(color 0.5s);
+                }
+
+
+
 
                 i.bullet {
                     float: left;
@@ -422,8 +446,19 @@ form {
                 }
             }
 
-            div.crossed {
-                text-decoration: line-through;
+            i.iconStar {
+                color: #F0F0F0;
+                float: left;
+                @include transition(color 1s);
+
+                &:hover {
+                    color: #FEDF2F;
+                }
+            }
+
+            i.iconStar.fas {
+                color: #FEDF2F;
+                @include transition(color 1s);
             }
         }
 
@@ -432,10 +467,6 @@ form {
                 display: inline-block;
                 float: left;
             }
-        }
-
-        li.crossAllowed:hover {
-            color: $main-color;
         }
     }
 }
@@ -575,15 +606,13 @@ form {
 #toolsNav.active {
     opacity: 0.9;
     width: $nav-width;
-    -webkit-transition: width 0.5s, padding 0.5s, opacity 0.5s;
-    transition: width 0.5s, padding 0.5s, opacity 0.5s;
+    @include transition(width 0.5s, padding 0.5s, opacity 0.5s);
 }
 #toolsNav.inactive {
     width: 0;
     padding: 0;
     opacity: 0;
-    -webkit-transition: width 0.5s, padding 0.5s, opacity 0.5s;
-    transition: width 0.5s, padding 0.5s, opacity 0.5s;
+    @include transition(width 0.5s, padding 0.5s, opacity 0.5s);
 }
 
 footer {
