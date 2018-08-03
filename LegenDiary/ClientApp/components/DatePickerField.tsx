@@ -1,8 +1,6 @@
 import * as React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-date-picker';
 import * as moment from 'moment';
-
-import 'react-datepicker/dist/react-datepicker.css';
 
 export interface DatePickerFieldProps {
     onChange: (ev: React.ChangeEvent<HTMLElement>) => void;
@@ -29,7 +27,7 @@ export class DatePickerField extends React.Component<DatePickerFieldProps, DateP
             <DatePicker
                 locale="fr-FR"
                 onChange={this.onChange}
-                selected={moment(this.state.date)}
+                value={this.state.date}
             />
         );
     }

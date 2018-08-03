@@ -25,13 +25,13 @@ namespace LegenDiary.Controllers
 
         // GET: api/Widgets
         [HttpGet]
-        [Route("User/{id}/{dt}")]
-        public WidgetsResponse GetUserWidgets(int id, DateTimeOffset dt)
+        [Route("User/{id}/{mode}/{dt}")]
+        public WidgetsResponse GetUserWidgets(int id, string mode, string dt)
         {
             WidgetsResponse res = new WidgetsResponse(false);
             try
             {
-                res = Widget.GetUserWidgets(_configuration, id, dt.ToString("yyyy-MM-dd"));
+                res = Widget.GetUserWidgets(_configuration, id, mode, dt);
             }
             catch (Exception e)
             {

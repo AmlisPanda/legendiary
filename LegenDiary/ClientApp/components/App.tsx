@@ -11,7 +11,15 @@ import { UserHome } from './UserHome';
 const App: React.SFC = () => {
     return <BrowserRouter>
         <Layout>
-            <PrivateRoute exact path="/user" component={UserHome} />
+            <PrivateRoute exact path="/user" component={(props) => (
+                <UserHome displayMode="day" {...props} />
+            )} />
+            <PrivateRoute exact path="/user/month" component={(props) => (
+                <UserHome displayMode="month" {...props}  />
+            )} />
+            <PrivateRoute exact path="/user/year" component={(props) => (
+                <UserHome displayMode="year" {...props} />
+            )} />
             <Route exact path="/" component={Home} />
         </Layout>
     </BrowserRouter>

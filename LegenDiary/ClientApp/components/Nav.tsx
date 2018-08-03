@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NavLink } from 'react-router-dom'
 import { NavItem } from './NavItem'
 import { UserSession } from './UserSession'
 import { Component } from 'react';
@@ -50,10 +51,9 @@ export class Nav extends React.Component<NavProps, NavState> {
             <ul id="toolsNav" className={this.props.active ? 'active' : 'inactive' }>
                 <NavItem iconCn="fas fa-plus fa-lg" label="Nouveau widget" handlerClick={this.props.createWidget} />
                 <NavItem iconCn="fas fa-file-alt fa-lg" label="Affichage" >
-                    <NavItem label="Jour"></NavItem>
-                    <NavItem label="Mois"></NavItem>
-                    <NavItem label="Semaine"></NavItem>
-                    <NavItem label="Année"></NavItem>
+                    <NavLink to="/user">Jour</NavLink>
+                    <NavLink to="/user/month">Mois</NavLink>
+                    <NavLink to="/user/year">Année</NavLink>
                 </NavItem>
                 <NavItem iconCn="fas fa-user-circle fa-lg" label="Mon profil" />
                 <NavItem iconCn="far fa-star fa-lg" label="Préférences" />

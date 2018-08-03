@@ -15,6 +15,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 
 interface WidgetsListProps {
+    mode: string;
     date: Date,
     isLoggedIn: boolean;
     userId: number;
@@ -25,6 +26,7 @@ interface WidgetsListProps {
 
 interface WidgetsListState {
     widgets: Widget[];
+    date: Date;
 }
 
 export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListState> {
@@ -37,19 +39,30 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
         this.closeWidgetPopup = this.closeWidgetPopup.bind(this);
 
         this.state = {
-            widgets: []
+            widgets: [],
+            date: this.props.date
         }
     }
 
     componentDidMount() {
+        console.log("componentDidMount");
         this.getWidgets();
     }
 
+
     componentWillReceiveProps(props) {
+        console.log("componentWillReceiveProps");
         const { refresh } = this.props;
         if (props.refresh == true) {
             this.getWidgets();
         }
+        else if (props.date != this.props.date) {
+            console.log(props.date);
+            this.getWidgets(props.date);
+
+            
+        }
+
     }
 
     openWidget(e, widget) {
@@ -92,8 +105,16 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
     }
 
     // Récupère la liste des widgets depuis le serveur
-    getWidgets() {
-        fetch('api/Widgets/User/' + this.props.userId + '/' + moment(this.props.date).format("YYYY-MM-DD")).then(
+    getWidgets(date?: Date) {
+
+        if (!date)
+            date = this.state.date;
+        console.log("getWidgets : " + moment(date).format("YYYY-MM-DD"));
+
+        let url = 'api/Widgets/User/' + this.props.userId + '/'; 
+        url += this.props.mode + "/" + moment(date).format("YYYY-MM-DD");
+
+        fetch(url).then(
             response => response.json()
         )
             .then(data => {
@@ -114,6 +135,7 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
 
         return (
             <div>
+                {moment(this.props.date).format("YYYY-MM-DD")}
             { this.state.widgets &&
 
                     <ResponsiveGridLayout key="widgetsList" className="layout" onDragStop={this.editLayout} onResizeStop={this.editLayout} margin={[20, 20]} cols={cols} draggableHandle={".grip, .widgetHeader"}>

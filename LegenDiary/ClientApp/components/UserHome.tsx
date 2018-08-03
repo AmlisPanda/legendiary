@@ -11,10 +11,11 @@ import { DateSelector } from './DateSelector';
 import { CreateWidgetForm } from './CreateWidgetForm';
 import { ReactNode } from 'react';
 import * as moment from 'moment';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-date-picker';
 
 
-export interface UserHomeProps extends RouteComponentProps<{}> {
+export interface UserHomeProps {
+    displayMode: string;
 }
 interface UserHomeState {
     userId: number;
@@ -24,9 +25,10 @@ interface UserHomeState {
     refreshWidgets: boolean;
     date: Date;
     calendarOpen: boolean;
+    displayMode: string;
 }
 
-export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
+export class UserHome extends React.Component<UserHomeProps & RouteComponentProps<{}>, UserHomeState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +37,8 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
             navDisplayed: false,
             refreshWidgets: false,
             date: new Date(),
-            calendarOpen: false
+            calendarOpen: false,
+            displayMode: this.props.displayMode
         }
 
         this.logout = this.logout.bind(this);
@@ -102,8 +105,8 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
     }
 
     handleChange(date) {
-        this.toggleCalendar();
-        this.setState({ date: date, refreshWidgets: true })
+        //this.toggleCalendar();
+        this.setState({ date: date })
         
     }
 
@@ -115,30 +118,29 @@ export class UserHome extends React.Component<UserHomeProps, UserHomeState> {
             </Popup>
             : "";
 
+        //let calendarDetail: string;
+        //if (this.props.displayMode != "day")
+        //    calendarDetail = this.props.displayMode;
+        //else
+        //    calendarDetail = 'century';
+
         return (
             <div>
 
                 <Header userId={this.state.userId} toggleNav={this.toggleNav} />
 
                 <div id="container" className={this.state.navDisplayed ? "withNavBar" : ""} onClick={this.closeNav}>
-
+                   
                     <div id="dateSelectorContainer">
-                        <button id="dateSelector" onClick={this.toggleCalendar}>
-                            {moment(this.state.date).locale("fr").format("LL")}
-                        </button>
-                        {
-                            this.state.calendarOpen && (
                                 <DatePicker
-                                    locale="fr"
-                                    selected={moment(this.state.date)}
+                                    showLeadingZeros={true}
+                                    value={this.state.date}
                                     onChange={this.handleChange}
-                                    withPortal
-                                    inline />
-                            )
-                        }
+                                />
                     </div>
 
                     <WidgetsList
+                        mode={this.props.displayMode}
                         date={this.state.date}
                         refresh={this.state.refreshWidgets}
                         isLoggedIn={true}
