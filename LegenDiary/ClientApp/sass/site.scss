@@ -76,18 +76,12 @@ button {
 
 #dateSelectorContainer {
     text-align: center;
+    font-size: 1.3em;
 
-    #dateSelector {
-        background-color: transparent;
-        color: white;
-        text-align: center;
-        padding: 10px 0 0;
-        font-size: 2em;
-        outline: none;
+    .react-date-picker__button {
+        border: none;
 
-        &:hover {
-            color: $main-color;
-        }
+
     }
 }
 
@@ -185,22 +179,12 @@ button {
 }
 
 form {
- 
+
 
 
     h2 {
         margin: 0;
         margin-bottom: 20px;
-    }
-
-
-    label {
-        display: block;
-        width: 80%;
-        text-align: left;
-        margin: auto;
-        margin-bottom: 30px;
-        color: $dark-color;
     }
 
     input[type='text'], input[type='password'] {
@@ -214,14 +198,38 @@ form {
         border: none;
     }
 
-    select, .react-date-picker {
-        font-size: 1em;
-        display: block;
+
+    .field {
+        margin-right: 20px;
+
+        label {
+            display: block;
+            width: 80%;
+            text-align: left;
+            margin: auto;
+            margin-bottom: 30px;
+            color: $dark-color;
+        }
+
+
+
+        select {
+            height: 29px;
+        }
+
+        select, .react-date-picker {
+            font-size: 1em;
+            display: block;
+            font-family: $font-stack;
+        }
+
+        .react-datepicker-wrapper input[type='text'] {
+            font-size: 1em;
+        }
     }
 
-    .react-datepicker-wrapper input[type='text'] {
-        font-size: 1em;
-    }
+
+
 
     .buttonForm {
         background-color: $dark-color;
@@ -317,8 +325,6 @@ form {
         width: calc(100% - 25px);
     }
 
-
-
     h2 {
         font-size: 1.4em;
         line-height: 20px;
@@ -352,7 +358,7 @@ form {
     .widgetContent {
         font-size: 1em;
         overflow: auto;
-        height: calc(100% - 50px);
+        height: calc(100% - 70px);
 
         p {
             margin: 0 0 8px 0;
@@ -370,6 +376,19 @@ form {
         -moz-user-select: none;
         -webkit-user-select: none;
         user-select: none;
+    }
+
+    footer {
+        position: absolute;
+        font-style: italic;
+        bottom: 0;
+        right: 10px;
+        height: 30px;
+        display: block;
+        background-color: transparent;
+        color: inherit;
+        font-size: 0.7em;
+        width: auto;
     }
 }
 
@@ -516,7 +535,7 @@ form {
             display: flex;
 
             .field {
-                flex-grow: 1;
+                /*flex-grow: 1;*/
             }
         }
 
@@ -589,6 +608,7 @@ form {
                 max-height: 0;
                 /*@include transition(max-height 0.2s ease);*/
             }
+
         }
 
     }

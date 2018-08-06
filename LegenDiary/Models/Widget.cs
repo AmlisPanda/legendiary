@@ -15,6 +15,7 @@ namespace LegenDiary.Models
     {
         [DataMember]
         public int WidgetId { get; set; }
+        [DataMember]
         public DateTimeOffset? WidgetDate { get; set; }
         [DataMember]
         public string Title { get; set; }

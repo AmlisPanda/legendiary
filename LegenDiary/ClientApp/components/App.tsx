@@ -12,6 +12,9 @@ const App: React.SFC = () => {
     return <BrowserRouter>
         <Layout>
             <PrivateRoute exact path="/user" component={(props) => (
+                <UserHome displayMode="month" {...props} />
+            )} />
+            <PrivateRoute exact path="/user/day" component={(props) => (
                 <UserHome displayMode="day" {...props} />
             )} />
             <PrivateRoute exact path="/user/month" component={(props) => (

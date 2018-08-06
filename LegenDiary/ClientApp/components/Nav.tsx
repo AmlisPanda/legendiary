@@ -51,9 +51,9 @@ export class Nav extends React.Component<NavProps, NavState> {
             <ul id="toolsNav" className={this.props.active ? 'active' : 'inactive' }>
                 <NavItem iconCn="fas fa-plus fa-lg" label="Nouveau widget" handlerClick={this.props.createWidget} />
                 <NavItem iconCn="fas fa-file-alt fa-lg" label="Affichage" >
-                    <NavLink to="/user">Jour</NavLink>
-                    <NavLink to="/user/month">Mois</NavLink>
-                    <NavLink to="/user/year">Année</NavLink>
+                    <li><NavLink to="/user/day">Jour</NavLink></li>
+                    <li><NavLink to="/user/month">Mois</NavLink></li>
+                    <li><NavLink to="/user/year">Année</NavLink></li>
                 </NavItem>
                 <NavItem iconCn="fas fa-user-circle fa-lg" label="Mon profil" />
                 <NavItem iconCn="far fa-star fa-lg" label="Préférences" />

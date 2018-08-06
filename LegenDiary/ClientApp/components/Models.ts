@@ -22,6 +22,7 @@ export class Widget {
     Subtitle: string;
     IsFavourite?: boolean;
     WidgetData: string;
+    WidgetDate?: Date;
     WidgetTypeId: number;
     AppuserId: number;
     Width: number;

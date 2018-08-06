@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as moment from 'moment';
 import { TextWidget } from './widgetContent/TextWidget';
 import { ImageWidget } from './widgetContent/ImageWidget';
 import { ListWidget } from './widgetContent/ListWidget';
@@ -72,7 +73,10 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
         }
     }
 
-	render() {
+    render() {
+
+        moment.locale("fr");
+
         const isFav = this.state.isFavourite;
         const actions = [
             <FlatButton
@@ -89,7 +93,7 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
         const w = this.props.widget;
 
         return (
-            <div className="widget" data-wid={this.props.widget.WidgetId} >
+            <div className="widget" data-wid={w.WidgetId} >
 				<div className="grip">
 					<i className="fas fa-expand-arrows-alt" title="Agrandir"></i>
 					{ this.props.isLoggedIn &&
@@ -112,6 +116,9 @@ export class WidgetElement extends React.Component<WidgetProps, WidgetState> {
                 <div className="widgetContent">
                     {this.getWidgetContent()}
                 </div>
+                <footer>
+                    {moment(w.WidgetDate).format("llll")}
+                </footer>
 
                 <Dialog
                     title="Confirmation nécessaire"

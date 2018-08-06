@@ -135,7 +135,6 @@ export class WidgetsList extends React.Component<WidgetsListProps, WidgetsListSt
 
         return (
             <div>
-                {moment(this.props.date).format("YYYY-MM-DD")}
             { this.state.widgets &&
 
                     <ResponsiveGridLayout key="widgetsList" className="layout" onDragStop={this.editLayout} onResizeStop={this.editLayout} margin={[20, 20]} cols={cols} draggableHandle={".grip, .widgetHeader"}>

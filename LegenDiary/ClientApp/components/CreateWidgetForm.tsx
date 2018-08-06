@@ -26,6 +26,7 @@ export class CreateWidgetForm extends React.Component<CreateWidgetFormProps, Cre
                 Title: "",
                 Subtitle: "",
                 WidgetData: "",
+                WidgetDate: new Date(),
                 AppuserId: userData.UserId,
                 WidgetTypeId: 0,
                 X: 0, Y: 0, Width: 1, Height: 1 

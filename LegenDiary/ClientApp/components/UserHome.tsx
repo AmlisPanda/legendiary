@@ -136,6 +136,7 @@ export class UserHome extends React.Component<UserHomeProps & RouteComponentProp
                                     showLeadingZeros={true}
                                     value={this.state.date}
                                     onChange={this.handleChange}
+                                    className={"widgets-datepicker"}
                                 />
                     </div>
 

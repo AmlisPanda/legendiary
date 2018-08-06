@@ -28,6 +28,7 @@ export class DatePickerField extends React.Component<DatePickerFieldProps, DateP
                 locale="fr-FR"
                 onChange={this.onChange}
                 value={this.state.date}
+                
             />
         );
     }
